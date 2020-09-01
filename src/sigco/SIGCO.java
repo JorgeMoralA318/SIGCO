@@ -8,10 +8,13 @@ package sigco;
 import Vista.barrioVista;
 import Vista.ciudadVista;
 import Vista.departamentoVista;
+import Vista.empresaVista;
+import Vista.paisVista;
+import Vista.profesionVista;
+import Vista.sucursalVista;
+import Vista.zonaVista;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-
 
 /**
  *
@@ -24,37 +27,20 @@ public class SIGCO {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            
-      /* departamentoVista dpto = new departamentoVista();
-        dpto.setTitle("Departamento");
-        dpto.setLocationRelativeTo(null);
-        dpto.setResizable(false);
-        dpto.setVisible(true);*/
-        
-        
-        /*ciudadVista f = new ciudadVista();
-        f.setTitle("Ciudad - Prueba Unitaria");
-        f.setLocationRelativeTo(null);
-        f.setResizable(false);
-        f.setVisible(true);*/
-        
-        
-        
-        barrioVista f = new barrioVista();
-        f.setTitle("Barrio - Prueba Unitaria");
-        f.setLocationRelativeTo(null);
-        f.setResizable(false);
-        f.setVisible(true);
+
+            Principal f = new Principal();
+            f.setTitle("Menu Principal  - Prueba Unitaria");
+            f.setLocationRelativeTo(null);
+            f.setResizable(false);
+            f.setVisible(true);
+
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             System.out.println(e.getMessage());
         }
-        
-        
-        
-        
+
     }
-    
+
 }

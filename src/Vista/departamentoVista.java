@@ -124,9 +124,9 @@ public class departamentoVista extends javax.swing.JFrame {
         jButton3.setText("Nuevo");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -140,7 +140,7 @@ public class departamentoVista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tabla.setGridColor(new java.awt.Color(0, 102, 102));
+        tabla.setGridColor(new java.awt.Color(153, 153, 153));
         tabla.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tablaKeyPressed(evt);
@@ -338,7 +338,7 @@ public class departamentoVista extends javax.swing.JFrame {
 
                 this.dispose();
             }
-        } else if (evt.getKeyCode() == KeyEvent.VK_TAB) {
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtbuscar.requestFocus();
         }
     }//GEN-LAST:event_tablaKeyPressed
