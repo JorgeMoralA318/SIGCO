@@ -40,7 +40,7 @@ public String obtener_id() {
     public ArrayList<DepartamentoVO> Listar_DepartamentoVO(String codigo){
         ArrayList<DepartamentoVO> list = new ArrayList<>();
         Conectar conec = new Conectar();
-        String sql = "SELECT departamento FROM departamento WHERE codigodpto=?";
+        String sql = "SELECT departamento FROM departamento WHERE codigo=?";
         ResultSet rs = null;
         PreparedStatement ps = null;
         try{
@@ -70,7 +70,7 @@ public String obtener_id() {
 /*Metodo agregar*/
     public void Agregar_DepartamentoVO(DepartamentoVO vo){
         Conectar conec = new Conectar();
-        String sql = "INSERT INTO departamento (codigodpto, departamento) VALUES(?, ?);";
+        String sql = "INSERT INTO departamento (codigo, departamento) VALUES(?, ?);";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -96,7 +96,7 @@ public String obtener_id() {
 /*Metodo Modificar*/
     public void Modificar_DepartamentoVO(DepartamentoVO vo){
         Conectar conec = new Conectar();
-        String sql = "UPDATE departamento SET departamento = ? WHERE codigodpto = ?;";
+        String sql = "UPDATE departamento SET departamento = ? WHERE codigo = ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -123,7 +123,7 @@ public String obtener_id() {
 /*Metodo Eliminar*/
     public void Eliminar_DepartamentoVO(DepartamentoVO vo){
         Conectar conec = new Conectar();
-        String sql = "DELETE FROM departamento WHERE codigodpto = ?;";
+        String sql = "DELETE FROM departamento WHERE codigo = ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);

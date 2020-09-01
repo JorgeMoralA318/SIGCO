@@ -48,7 +48,7 @@ public class tablaDepartamento {
         DecimalFormat df = new DecimalFormat(simbolo);
             
 
-        String sql = "SELECT codigodpto, departamento FROM departamento\n" +
+        String sql = "SELECT codigo, departamento FROM departamento\n" +
 "WHERE departamento LIKE ?";
 
         try {

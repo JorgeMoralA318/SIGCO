@@ -10,13 +10,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class tablaBarrio{
 
-   barrioVista vista;
+ barrioVista vista;
     DefaultTableModel modelo;
     PreparedStatement ps = null;
-    String[] titulosColumnas = {"Código Barrio","Barrio","Ciudad"};
+    String[] titulosColumnas = {"Código","Nivel","ciudad"};
     //matriz donde se almacena los datos de cada celda de la tabla
     String info[][] = {};
-    private final boolean[] editable = {false, false,false};
+    private final boolean[] editable = {false, false};
 
     private void ancho_columnas() {
         int[] anchos = {80, 165,165};
