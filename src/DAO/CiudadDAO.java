@@ -41,7 +41,7 @@ public class CiudadDAO{
     public ArrayList<CiudadVO> Listar_CiudadVO(String codigo){
         ArrayList<CiudadVO> list = new ArrayList<>();
         Conectar conec = new Conectar();
-        String sql = "SELECT * FROM ciudad WHERE codigociudad=?;";
+        String sql = "SELECT * FROM ciudad WHERE codigo=?;";
         ResultSet rs = null;
         PreparedStatement ps = null;
         try{
@@ -73,7 +73,7 @@ public class CiudadDAO{
 /*Metodo agregar*/
     public void Agregar_CiudadVO(CiudadVO vo){
         Conectar conec = new Conectar();
-        String sql = "INSERT INTO ciudad (codigociudad,ciudad,codigodpto) VALUES(?, ?, ?);";
+        String sql = "INSERT INTO ciudad (codigo,ciudad,codDepartamento) VALUES(?, ?, ?);";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -101,7 +101,7 @@ public class CiudadDAO{
 /*Metodo Modificar*/
     public void Modificar_CiudadVO(CiudadVO vo){
         Conectar conec = new Conectar();
-        String sql = "UPDATE ciudad SET ciudad = ?, codigodpto = ? WHERE codigociudad = ?;";
+        String sql = "UPDATE ciudad SET ciudad = ?, codDepartamento= ? WHERE codigo = ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -129,7 +129,7 @@ public class CiudadDAO{
 /*Metodo Eliminar*/
     public void Eliminar_CiudadVO(CiudadVO vo){
         Conectar conec = new Conectar();
-        String sql = "DELETE FROM ciudad WHERE codigociudad = ?;";
+        String sql = "DELETE FROM ciudad WHERE codigo= ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);

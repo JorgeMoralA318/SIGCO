@@ -8,7 +8,7 @@ public class Conectar{
 
     static String bd = "sigcodb";
     static String login = "root";
-    static String password = "";
+    static String password = "12345";
     static  String url = "jdbc:mysql://localhost/"+bd;
     Connection connection = null;
 

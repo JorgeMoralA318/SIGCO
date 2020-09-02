@@ -21,7 +21,7 @@ public class tablaNivel {
     private final boolean[] editable = {false, false};
 
     private void ancho_columnas() {
-        int[] anchos = {80, 165};
+        int[] anchos = {80, 325};
         for (int i = 0; i < vista.tabla.getColumnCount(); i++) {
             vista.tabla.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }

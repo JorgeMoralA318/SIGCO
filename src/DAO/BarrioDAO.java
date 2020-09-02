@@ -73,7 +73,7 @@ public class BarrioDAO{
 /*Metodo agregar*/
     public void Agregar_BarrioVO(BarrioVO vo){
         Conectar conec = new Conectar();
-        String sql = "INSERT INTO barrio (codigo, barrio, codigociudad) VALUES(?, ?, ?);";
+        String sql = "INSERT INTO barrio (codigo, barrio, codCiudad) VALUES(?, ?, ?);";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -100,7 +100,7 @@ public class BarrioDAO{
 /*Metodo Modificar*/
     public void Modificar_BarrioVO(BarrioVO vo){
         Conectar conec = new Conectar();
-        String sql = "UPDATE barrio SET barrio = ?, codigociudad = ? WHERE codigo = ?;";
+        String sql = "UPDATE barrio SET barrio = ?, codCiudad = ? WHERE codigo = ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);

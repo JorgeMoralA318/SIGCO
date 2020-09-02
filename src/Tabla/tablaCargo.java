@@ -2,24 +2,24 @@ package Tabla;
 
 
 import Conexion.Conectar;
-import Vista.ciudadVista;
 import java.sql.*;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Vista.cargoVista;
 
-public class tablaCiudad{
+public class tablaCargo {
 
-   ciudadVista vista;
+    cargoVista vista;
     DefaultTableModel modelo;
     PreparedStatement ps = null;
-    String[] titulosColumnas = {"Código","Ciudad","Departamento"};
+    String[] titulosColumnas = {"Código","Cargo"};
     //matriz donde se almacena los datos de cada celda de la tabla
     String info[][] = {};
-    private final boolean[] editable = {false, false,false};
+    private final boolean[] editable = {false, false};
 
     private void ancho_columnas() {
-        int[] anchos = {80, 165,165};
+        int[] anchos = {80, 325};
         for (int i = 0; i < vista.tabla.getColumnCount(); i++) {
             vista.tabla.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
         }
@@ -48,9 +48,8 @@ public class tablaCiudad{
         DecimalFormat df = new DecimalFormat(simbolo);
             
 
-        String sql = "SELECT a.codigo,a.ciudad,b.departamento\n" +
-"FROM ciudad a INNER JOIN departamento b\n" +
-"ON a.codDepartamento= b.codigo WHERE a.ciudad LIKE ?";
+        String sql = "SELECT * FROM Cargo\n" +
+"WHERE cargo LIKE ?";
 
         try {
             ps = conec.getConnection().prepareStatement(sql);
@@ -60,10 +59,9 @@ public class tablaCiudad{
             while (rs.next()) {
                 String codigo = rs.getString(1);
                 String nombre = rs.getString(2);
-                String dpto = rs.getString(3);
 
                 //crea un vector donde  está la informacion (se crea una fila)
-                Object[] datos = {codigo,nombre,dpto};
+                Object[] datos = {codigo,nombre};
                 //al modelo de la tabla le agrega una fila
                 //con los datos que están en datos
                 modelo.addRow(datos);

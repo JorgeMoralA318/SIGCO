@@ -71,7 +71,7 @@ public class ZonaDAO {
     /*Metodo agregar*/
     public void Agregar_ZonaVO(ZonaVO vo) {
         Conectar conec = new Conectar();
-        String sql = "INSERT INTO zona (codigo, zona, codigociudad) VALUES(?, ?, ?);";
+        String sql = "INSERT INTO zona (codigo, zona, codCiudad) VALUES(?, ?, ?);";
         PreparedStatement ps = null;
         try {
             ps = conec.getConnection().prepareStatement(sql);
@@ -99,7 +99,7 @@ public class ZonaDAO {
     /*Metodo Modificar*/
     public void Modificar_ZonaVO(ZonaVO vo) {
         Conectar conec = new Conectar();
-        String sql = "UPDATE zona SET zona = ?, codigociudad = ? WHERE codigo = ?;";
+        String sql = "UPDATE zona SET zona = ?, codCiudad = ? WHERE codigo = ?;";
         PreparedStatement ps = null;
         try {
             ps = conec.getConnection().prepareStatement(sql);

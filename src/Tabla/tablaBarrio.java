@@ -13,7 +13,7 @@ public class tablaBarrio{
  barrioVista vista;
     DefaultTableModel modelo;
     PreparedStatement ps = null;
-    String[] titulosColumnas = {"Código","Nivel","ciudad"};
+    String[] titulosColumnas = {"Código","Barrio","ciudad"};
     //matriz donde se almacena los datos de cada celda de la tabla
     String info[][] = {};
     private final boolean[] editable = {false, false};
@@ -50,7 +50,7 @@ public class tablaBarrio{
 
         String sql = "SELECT a.codigo,a.barrio,b.ciudad\n" +
 "FROM barrio a INNER JOIN ciudad b\n" +
-"ON a.codigociudad= b.codigociudad WHERE a.barrio LIKE ?";
+"ON a.codCiudad= b.codigo WHERE a.barrio LIKE ?";
 
         try {
             ps = conec.getConnection().prepareStatement(sql);
