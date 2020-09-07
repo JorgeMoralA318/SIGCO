@@ -2,7 +2,6 @@
 package DAO;
 
 import Conexion.Conectar;
-import VO.BarrioVO;
 import java.sql.*;
 import VO.NivelVO;
 import ds.desktop.notify.DesktopNotify;

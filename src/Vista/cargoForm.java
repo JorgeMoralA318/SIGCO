@@ -5,8 +5,8 @@
  */
 package Vista;
 
-import DAO.DepartamentoDAO;
-import VO.DepartamentoVO;
+import DAO.CargoDAO;
+import VO.CargoVO;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.time.LocalDate;
@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
  */
 public class cargoForm extends javax.swing.JFrame {
 
-    DepartamentoVO vo = new DepartamentoVO();
-    DepartamentoDAO dao = new DepartamentoDAO();
+    CargoVO vo = new CargoVO();
+    CargoDAO dao = new CargoDAO();
 
     /**
      * Creates new form departamentoVista
@@ -71,33 +71,33 @@ public class cargoForm extends javax.swing.JFrame {
     //metodo para capturar y enviar datos
     void guardar() {
         String codigo = txtcodigo.getText();
-        String dpto = txtdpto.getText();
+        String cargo = txtcargo.getText();
 
         vo.setCodigo(codigo);
-        vo.setDepartamento(dpto);
+        vo.setCargo(cargo);
 
-        dao.Agregar_DepartamentoVO(vo);
+        dao.Agregar_CargoVO(vo);
 
     }
 
     void actualizar() {
         String codigo = txtcodigo.getText();
-        String dpto = txtdpto.getText();
+        String cargo = txtcargo.getText();
 
         vo.setCodigo(codigo);
-        vo.setDepartamento(dpto);
+        vo.setCargo(cargo);
 
-        dao.Modificar_DepartamentoVO(vo);
+        dao.Modificar_CargoVO(vo);
 
     }
 
     //metodo paara cerra formulario actual y abrir principalç
     void cambiar_form() {
         String var = lblejecucion.getText();
-        departamentoVista v = new departamentoVista();
+        cargoVista v = new cargoVista();
         v.setResizable(false);
         v.setLocationRelativeTo(null);
-        v.setTitle("Departamento");
+        v.setTitle("Cargo");
         v.lblejecucion.setText(var);
         v.setVisible(true);
         this.dispose();
@@ -110,45 +110,45 @@ public class cargoForm extends javax.swing.JFrame {
             txtcodigo.requestFocus();
             txtcodigo.setBackground(Color.YELLOW);
             return false;
-        } else if (txtdpto.getText().isEmpty()) {
+        } else if (txtcargo.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, llene los campos requeridos");
-            txtdpto.requestFocus();
-            txtdpto.setBackground(Color.YELLOW);
+            txtcargo.requestFocus();
+            txtcargo.setBackground(Color.YELLOW);
             return false;
         } else {
             txtcodigo.setBackground(Color.white);
-            txtdpto.setBackground(Color.white);
+            txtcargo.setBackground(Color.white);
             return true;
         }
     }
 
     void vaciar() {
         txtcodigo.setText("");
-        txtdpto.setText("");
+        txtcargo.setText("");
     }
 
     private void obtener_codigo() {
-        dao = new DepartamentoDAO();
-        txtcodigo.setText("D-"+dao.obtener_id());
-        txtdpto.requestFocus();
+        dao = new CargoDAO();
+        txtcodigo.setText("CA-"+dao.obtener_id());
+        txtcargo.requestFocus();
     }
 
     public void listarCodigo(String codigo) {
-        ArrayList<DepartamentoVO> list = dao.Listar_DepartamentoVO(codigo);
+        ArrayList<CargoVO> list = dao.Listar_CargoVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 Object fila[] = new Object[1];
                 vo = list.get(i);
                 //almacenamos valores en el vector fila
-                fila[0] = vo.getDepartamento();
-                txtdpto.setText((String) fila[0]);
+                fila[0] = vo.getCargo();
+                txtcargo.setText((String) fila[0]);
                 lblaction.setText("Update");
 
             }
         } else {
             if(txtcodigo.getText().length()>0){
             lblaction.setText("Add");
-            txtdpto.setText("");}
+            txtcargo.setText("");}
            
         }
         
@@ -159,7 +159,7 @@ public class cargoForm extends javax.swing.JFrame {
       if (txtcodigo.getText().length()>0){
        String codigo = txtcodigo.getText();
         vo.setCodigo(codigo);
-        dao.Eliminar_DepartamentoVO(vo);
+        dao.Eliminar_CargoVO(vo);
         cambiar_form();
       }else{
           JOptionPane.showMessageDialog(null, "Nada que eliminar");
@@ -170,7 +170,7 @@ public class cargoForm extends javax.swing.JFrame {
     
     private void subir(KeyEvent evt){
          if (evt.getKeyCode() == KeyEvent.VK_UP){
-            txtdpto.requestFocus();
+            txtcargo.requestFocus();
         }
     }
     
@@ -199,7 +199,7 @@ public class cargoForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtcodigo = new javax.swing.JTextField();
-        txtdpto = new javax.swing.JTextField();
+        txtcargo = new javax.swing.JTextField();
         b_guardar = new javax.swing.JButton();
         b_guardarynuevo = new javax.swing.JButton();
         b_cancelar = new javax.swing.JButton();
@@ -211,7 +211,7 @@ public class cargoForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jToolBar1.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.inactiveTitleBackground"));
         jToolBar1.setRollover(true);
@@ -231,7 +231,7 @@ public class cargoForm extends javax.swing.JFrame {
 
         jLabel2.setText("Código :");
 
-        jLabel3.setText("Departamento :");
+        jLabel3.setText("Cargo :");
 
         txtcodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtcodigo.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -250,17 +250,17 @@ public class cargoForm extends javax.swing.JFrame {
             }
         });
 
-        txtdpto.addActionListener(new java.awt.event.ActionListener() {
+        txtcargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtdptoActionPerformed(evt);
+                txtcargoActionPerformed(evt);
             }
         });
-        txtdpto.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtcargo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtdptoKeyPressed(evt);
+                txtcargoKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtdptoKeyReleased(evt);
+                txtcargoKeyReleased(evt);
             }
         });
 
@@ -343,7 +343,7 @@ public class cargoForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtdpto, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtcargo, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -355,7 +355,7 @@ public class cargoForm extends javax.swing.JFrame {
                     .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtdpto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -474,7 +474,7 @@ public class cargoForm extends javax.swing.JFrame {
         cambiar_form();
     }//GEN-LAST:event_b_cancelarActionPerformed
 
-    private void txtdptoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdptoKeyPressed
+    private void txtcargoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcargoKeyPressed
         // evento para volver al contenedor anterior:
 
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
@@ -483,27 +483,27 @@ public class cargoForm extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_txtdptoKeyPressed
+    }//GEN-LAST:event_txtcargoKeyPressed
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
-        txtdpto.requestFocus();
+        txtcargo.requestFocus();
     }//GEN-LAST:event_txtcodigoActionPerformed
 
-    private void txtdptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdptoActionPerformed
+    private void txtcargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcargoActionPerformed
         // TODO add your handling code here:
         b_guardar.requestFocus();
-    }//GEN-LAST:event_txtdptoActionPerformed
+    }//GEN-LAST:event_txtcargoActionPerformed
 
-    private void txtdptoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdptoKeyReleased
+    private void txtcargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcargoKeyReleased
         // TODO add your handling code here:
 
-        if (txtdpto.getText().length() >= 4) {
-            txtdpto.setBackground(Color.white);
+        if (txtcargo.getText().length() >= 4) {
+            txtcargo.setBackground(Color.white);
         } else {
-            txtdpto.setBackground(Color.yellow);
+            txtcargo.setBackground(Color.yellow);
         }
-    }//GEN-LAST:event_txtdptoKeyReleased
+    }//GEN-LAST:event_txtcargoKeyReleased
 
     private void txtcodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoKeyReleased
         // TODO add your handling code here:
@@ -521,8 +521,8 @@ public class cargoForm extends javax.swing.JFrame {
 
     private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
         // TODO add your handling code here:
-        int mensaje = JOptionPane.showConfirmDialog(null, "Estas Seguro que deseas Eliminar?","Atención",JOptionPane.YES_NO_OPTION);
-        if (mensaje == JOptionPane.YES_OPTION){
+        int mensaje = JOptionPane.showConfirmDialog(null, "Estas Seguro que deseas Eliminar?","Atención",JOptionPane.OK_CANCEL_OPTION);
+        if (mensaje == 0){
             eliminar();
         }
     }//GEN-LAST:event_b_eliminarActionPerformed
@@ -614,7 +614,7 @@ public class cargoForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblfecha;
     private javax.swing.JMenuItem m_guardar;
     private javax.swing.JMenuItem m_salir;
+    private javax.swing.JTextField txtcargo;
     public static javax.swing.JTextField txtcodigo;
-    private javax.swing.JTextField txtdpto;
     // End of variables declaration//GEN-END:variables
 }

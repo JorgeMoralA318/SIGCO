@@ -41,7 +41,7 @@ public class CargoDAO{
     public ArrayList<CargoVO> Listar_CargoVO(String codigo){
         ArrayList<CargoVO> list = new ArrayList<CargoVO>();
         Conectar conec = new Conectar();
-        String sql = "SELECT * FROM cargo;";
+        String sql = "SELECT * FROM cargo WHERE codigo = ?;";
         ResultSet rs = null;
         PreparedStatement ps = null;
         try{

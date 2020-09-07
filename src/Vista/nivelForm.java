@@ -219,7 +219,7 @@ public class nivelForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jToolBar1.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.inactiveTitleBackground"));
         jToolBar1.setRollover(true);
@@ -378,7 +378,7 @@ public class nivelForm extends javax.swing.JFrame {
         jMenu1.setBorder(null);
         jMenu1.setText("Archivo");
 
-        m_guardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        m_guardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK));
         m_guardar.setText("Guardar");
         m_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -387,7 +387,7 @@ public class nivelForm extends javax.swing.JFrame {
         });
         jMenu1.add(m_guardar);
 
-        m_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        m_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK));
         m_salir.setText("Salir");
         m_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -609,12 +609,12 @@ public class nivelForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lblaction;
+    public static javax.swing.JLabel lblaction;
     public static javax.swing.JLabel lblejecucion;
     public javax.swing.JLabel lblfecha;
     private javax.swing.JMenuItem m_guardar;
