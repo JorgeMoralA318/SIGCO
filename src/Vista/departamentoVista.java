@@ -24,9 +24,10 @@ public class departamentoVista extends javax.swing.JFrame {
 
     tablaDepartamento tab = new tablaDepartamento();
     departamentoForm form = new departamentoForm();
-    DepartamentoDAO dao ;
+    DepartamentoDAO dao;
     DepartamentoVO vo;
-     ciudadForm c;
+    ciudadForm c;
+    personalForm perDpto;
 
     /**
      * Creates new form departamentoVista
@@ -82,11 +83,6 @@ public class departamentoVista extends javax.swing.JFrame {
 
         lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
     }
-    
-    
-
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,7 +122,7 @@ public class departamentoVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -329,10 +325,12 @@ public class departamentoVista extends javax.swing.JFrame {
                         form.lblejecucion.setText(var);
                         form.setVisible(true);
                         break;
-                        case"Ciudad":
-                            c.txtdpto.setText(codigo);
-                            break;
-
+                    case "Ciudad":
+                        c.txtdpto.setText(codigo);
+                        break;
+                    case "con_per":
+                        perDpto.txtdpto.setText(codigo);
+                        break;
 
                 }
 
@@ -377,7 +375,6 @@ public class departamentoVista extends javax.swing.JFrame {
             form.setLocationRelativeTo(null);
             form.lblejecucion.setText(var);
             form.setVisible(true);
-
 
         }
     }//GEN-LAST:event_b_modificarActionPerformed

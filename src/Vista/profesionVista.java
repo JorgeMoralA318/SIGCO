@@ -22,6 +22,7 @@ public class profesionVista extends javax.swing.JFrame {
 
     tablaProfesion tab = new tablaProfesion();
     profesionForm form = new profesionForm();
+    personalForm perPro;
 
     /**
      * Creates new form departamentoVista
@@ -131,7 +132,7 @@ public class profesionVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -330,7 +331,9 @@ public class profesionVista extends javax.swing.JFrame {
                        cambiarform();
                        form.txtcodigo.setText(codigo);
                         break;
-
+                    case "con_per":
+                       perPro.txtprofesion.setText(codigo);
+                        break;
                 }
 
                 this.dispose();

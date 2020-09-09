@@ -5,10 +5,20 @@
  */
 package Vista;
 
+import DAO.BarrioDAO;
+import DAO.CiudadDAO;
+import DAO.DepartamentoDAO;
 import DAO.PaisDAO;
 import DAO.PersonalDAO;
+import DAO.ProfesionDAO;
+import DAO.SucursalDAO;
+import VO.BarrioVO;
+import VO.CiudadVO;
+import VO.DepartamentoVO;
 import VO.PaisVO;
 import VO.PersonalVO;
+import VO.ProfesionVO;
+import VO.SucursalVO;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
@@ -121,6 +131,7 @@ public class personalForm extends javax.swing.JFrame {
         vo.setTelefono(telefono);
         vo.setEmail(email);
         vo.setTelefono(telefono);
+        vo.setReferencia(referencia);
 
         dao.Agregar_PersonalVO(vo);
     }
@@ -174,6 +185,7 @@ public class personalForm extends javax.swing.JFrame {
         vo.setTelefono(telefono);
         vo.setEmail(email);
         vo.setTelefono(telefono);
+        vo.setReferencia(referencia);
 
         dao.Modificar_PersonalVO(vo);
     }
@@ -273,7 +285,7 @@ public class personalForm extends javax.swing.JFrame {
                 año = Integer.parseInt(partes[0]);
                 mes = Integer.parseInt(partes[1]);
                 dia = Integer.parseInt(partes[2]);
-                jdcfechaingreso.setDate(new Date(año-1900, mes-1, dia));
+                jdcfechaingreso.setDate(new Date(año - 1900, mes - 1, dia));
                 txtrucci.setText((String) fila[1]);
                 txtnombre.setText((String) fila[2]);
                 txtapellido.setText((String) fila[3]);
@@ -282,7 +294,7 @@ public class personalForm extends javax.swing.JFrame {
                 año = Integer.parseInt(partes2[0]);
                 mes = Integer.parseInt(partes2[1]);
                 dia = Integer.parseInt(partes2[2]);
-                jdcfechanac.setDate(new Date(año-1900, mes-1, dia));
+                jdcfechanac.setDate(new Date(año - 1900, mes - 1, dia));
                 String sexo = (String) fila[5];
                 if (sexo.equals("F")) {
                     jrbfemenino.setSelected(true);
@@ -318,6 +330,13 @@ public class personalForm extends javax.swing.JFrame {
                 txtreferencia.setText((String) fila[16]);
 
                 lblaction.setText("Update");
+                listarpais(txtpais.getText());
+                listardpto(txtdpto.getText());
+                listarciudad(txtciudad.getText());
+                listarbarrio(txtbarrio.getText());
+                listarsucursal(txtsucursal.getText());
+                listarprofesion(txtprofesion.getText());
+                txtrucci.requestFocus();
 
             }
         } else {
@@ -349,13 +368,123 @@ public class personalForm extends javax.swing.JFrame {
 
         }
     }
-    
-    
-    //listar Pais
-    void listarPais(String codigo) {
-        PaisDAO PDAO = new PaisDAO();
-        PaisVO pvo ;
-        ArrayList<PaisVO> list = PDAO.Listar_PaisVO(codigo);
+
+
+    //Listar Departamento
+    void listardpto(String codigo) {
+        DepartamentoVO dvo;
+        DepartamentoDAO pdao = new DepartamentoDAO();
+        ArrayList<DepartamentoVO> list = pdao.Listar_DepartamentoVO(codigo);
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                Object fila[] = new Object[1];
+                dvo = list.get(i);
+                //almacenamos valores en el vector fila
+                fila[0] = dvo.getDepartamento();
+                txtnombredpto.setText((String) fila[0]);
+                txtciudad.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombredpto.setText("");
+            txtdpto.setText("");
+            txtdpto.requestFocus();
+        }
+    }
+
+    //Listar Ciudad
+    void listarciudad(String codigo) {
+        CiudadVO cvo;
+        CiudadDAO cdao = new CiudadDAO();
+        ArrayList<CiudadVO> list = cdao.Listar_CiudadVO(codigo);
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                Object fila[] = new Object[1];
+                cvo = list.get(i);
+                //almacenamos valores en el vector fila
+                fila[0] = cvo.getCiudad();
+                txtnombreciudad.setText((String) fila[0]);
+                txtbarrio.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombreciudad.setText("");
+            txtciudad.setText("");
+            txtciudad.requestFocus();
+        }
+    }
+
+    //Listar Barrio
+    void listarbarrio(String codigo) {
+        BarrioVO bvo;
+        BarrioDAO bdao = new BarrioDAO();
+        ArrayList<BarrioVO> list = bdao.Listar_BarrioVO(codigo);
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                Object fila[] = new Object[1];
+                bvo = list.get(i);
+                //almacenamos valores en el vector fila
+                fila[0] = bvo.getBarrio();
+                txtnombrebarrio.setText((String) fila[0]);
+                txtsucursal.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombrebarrio.setText("");
+            txtbarrio.setText("");
+            txtbarrio.requestFocus();
+        }
+    }
+
+    //Listar Empresa
+    void listarsucursal(String codigo) {
+        SucursalVO svo;
+        SucursalDAO sdao = new SucursalDAO();
+        ArrayList<SucursalVO> list = sdao.Listar_SucursalVO(codigo);
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                Object fila[] = new Object[1];
+                svo = list.get(i);
+                //almacenamos valores en el vector fila
+                fila[0] = svo.getSucursal();
+                txtnombresucursal.setText((String) fila[0]);
+                txtprofesion.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombresucursal.setText("");
+            txtsucursal.setText("");
+            txtsucursal.requestFocus();
+        }
+    }
+
+    //Listar Profesion
+    void listarprofesion(String codigo) {
+        ProfesionVO provo;
+        ProfesionDAO prodao = new ProfesionDAO();
+        ArrayList<ProfesionVO> list = prodao.Listar_ProfesionVO(codigo);
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                Object fila[] = new Object[1];
+                provo = list.get(i);
+                //almacenamos valores en el vector fila
+                fila[0] = provo.getProfesion();
+                txtnombreprofesion.setText((String) fila[0]);
+                txtcasa.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombreprofesion.setText("");
+            txtprofesion.setText("");
+            txtprofesion.requestFocus();
+        }
+    }
+
+    //Listar Pais
+    void listarpais(String codigo) {
+        PaisVO pvo;
+        PaisDAO pdao = new PaisDAO();
+        ArrayList<PaisVO> list = pdao.Listar_PaisVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
                 Object fila[] = new Object[1];
@@ -363,28 +492,16 @@ public class personalForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = pvo.getPais();
                 txtnombrepais.setText((String) fila[0]);
-
+                txtdpto.requestFocus();
             }
         } else {
-            if (txtcodigo.getText().length() > 0) {
-                lblaction.setText("Add");
-                txtpais.setText("");
-            }
-
+            JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
+            txtnombrepais.setText("");
+            txtpais.setText("");
+            txtpais.requestFocus();
         }
 
     }
-    
-    //Listar Departamento
-    
-    //Listar Ciudad
-    
-    //Listar Barrio
-    
-    //Listar Empresa
-    
-    //Listar Profesion
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -463,7 +580,7 @@ public class personalForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(233, 236, 216));
 
         jToolBar1.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.inactiveTitleBackground"));
         jToolBar1.setRollover(true);
@@ -575,6 +692,11 @@ public class personalForm extends javax.swing.JFrame {
         jLabel5.setText("Fecha de Ingreso :");
 
         jdcfechaingreso.setDateFormatString("dd-MM-y");
+        jdcfechaingreso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jdcfechaingresoKeyPressed(evt);
+            }
+        });
 
         txtnombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -609,62 +731,107 @@ public class personalForm extends javax.swing.JFrame {
         jLabel6.setText("Apellidos :");
 
         jdcfechanac.setDateFormatString("dd-MM-y");
+        jdcfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jdcfechanacKeyPressed(evt);
+            }
+        });
 
         jLabel7.setText("Fecha de Nac. :");
 
         jLabel8.setText("Sexo :");
 
-        jrbmasculino.setBackground(new java.awt.Color(245, 245, 245));
         groupSexo.add(jrbmasculino);
         jrbmasculino.setText("Masculino");
 
-        jrbfemenino.setBackground(new java.awt.Color(245, 245, 245));
         groupSexo.add(jrbfemenino);
         jrbfemenino.setText("Femenino");
 
         jLabel9.setText("Estado Civil :");
 
-        jrdsoltero.setBackground(new java.awt.Color(245, 245, 245));
         groupEstadoCivil.add(jrdsoltero);
         jrdsoltero.setText("Soltero");
 
-        jrdcasado.setBackground(new java.awt.Color(245, 245, 245));
         groupEstadoCivil.add(jrdcasado);
         jrdcasado.setText("Casado");
 
-        jrdseparado.setBackground(new java.awt.Color(245, 245, 245));
         groupEstadoCivil.add(jrdseparado);
         jrdseparado.setText("Separado");
 
-        jrdviudo.setBackground(new java.awt.Color(245, 245, 245));
         groupEstadoCivil.add(jrdviudo);
         jrdviudo.setText("Viudo");
 
         txtpais.setToolTipText("");
+        txtpais.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtpaisFocusLost(evt);
+            }
+        });
+        txtpais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtpaisActionPerformed(evt);
+            }
+        });
+        txtpais.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtpaisKeyPressed(evt);
+            }
+        });
 
         jLabel10.setText("Pais :");
 
+        txtnombrepais.setEditable(false);
+        txtnombrepais.setBackground(new java.awt.Color(250, 250, 250));
         txtnombrepais.setToolTipText("");
 
+        txtnombredpto.setEditable(false);
+        txtnombredpto.setBackground(new java.awt.Color(250, 250, 250));
         txtnombredpto.setToolTipText("");
 
         txtdpto.setToolTipText("");
+        txtdpto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtdptoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdptoKeyReleased(evt);
+            }
+        });
 
         jLabel11.setText("Departamento :");
 
         jLabel12.setText("Ciudad :");
 
+        txtnombreciudad.setEditable(false);
+        txtnombreciudad.setBackground(new java.awt.Color(250, 250, 250));
         txtnombreciudad.setToolTipText("");
 
         txtciudad.setToolTipText("");
+        txtciudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtciudadKeyPressed(evt);
+            }
+        });
 
+        txtnombrebarrio.setEditable(false);
+        txtnombrebarrio.setBackground(new java.awt.Color(250, 250, 250));
         txtnombrebarrio.setToolTipText("");
 
         txtbarrio.setToolTipText("");
+        txtbarrio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtbarrioKeyPressed(evt);
+            }
+        });
 
         jLabel13.setText("Barrio :");
 
         txtsucursal.setToolTipText("");
+        txtsucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtsucursalActionPerformed(evt);
+            }
+        });
         txtsucursal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtsucursalKeyPressed(evt);
@@ -673,120 +840,152 @@ public class personalForm extends javax.swing.JFrame {
 
         jLabel14.setText("Sucursal :");
 
+        txtnombresucursal.setEditable(false);
+        txtnombresucursal.setBackground(new java.awt.Color(250, 250, 250));
         txtnombresucursal.setToolTipText("");
 
         jLabel15.setText("Profesión :");
 
         txtprofesion.setToolTipText("");
+        txtprofesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtprofesionKeyPressed(evt);
+            }
+        });
 
+        txtnombreprofesion.setEditable(false);
+        txtnombreprofesion.setBackground(new java.awt.Color(250, 250, 250));
         txtnombreprofesion.setToolTipText("");
 
         txtcasa.setToolTipText("");
+        txtcasa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcasaActionPerformed(evt);
+            }
+        });
+        txtcasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtcasaKeyPressed(evt);
+            }
+        });
 
         jLabel16.setText("Casa Número :");
 
         txttelefono.setToolTipText("");
+        txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyPressed(evt);
+            }
+        });
 
         jLabel17.setText("Número de Teléfono :");
 
         jLabel18.setText("Correo Electrónico :");
 
         txtemail.setToolTipText("");
+        txtemail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtemailKeyPressed(evt);
+            }
+        });
 
         jLabel19.setText("Referencia :");
 
         txtreferencia.setToolTipText("");
+        txtreferencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtreferenciaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(107, 107, 107)
+                .addComponent(jLabel9))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(jLabel9))
+                        .addGap(78, 78, 78)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(78, 78, 78)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addComponent(jrdsoltero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrdsoltero)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jrdcasado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jrdseparado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jrdviudo))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtpais, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombrepais, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtdpto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombredpto, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombreciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtbarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombrebarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtsucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombresucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnombreprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtcasa, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdcfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbmasculino)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jrbfemenino))
-                            .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtrucci, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jdcfechaingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jrdcasado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrdseparado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrdviudo))
+                    .addComponent(txtcasa, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(203, 203, 203)
-                        .addComponent(b_guardar)
-                        .addGap(6, 6, 6)
-                        .addComponent(b_guardarynuevo)
-                        .addGap(6, 6, 6)
-                        .addComponent(b_eliminar)
-                        .addGap(6, 6, 6)
-                        .addComponent(b_cancelar))
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, Short.MAX_VALUE))
+                        .addComponent(jrbmasculino)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jrbfemenino))
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtrucci, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jdcfechaingreso, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtprofesion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombreprofesion))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtsucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombresucursal))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtbarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombrebarrio))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombreciudad))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtdpto, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombredpto))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(txtpais, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtnombrepais, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(b_guardar)
+                .addGap(6, 6, 6)
+                .addComponent(b_guardarynuevo)
+                .addGap(6, 6, 6)
+                .addComponent(b_eliminar)
+                .addGap(6, 6, 6)
+                .addComponent(b_cancelar))
+            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -940,7 +1139,7 @@ public class personalForm extends javax.swing.JFrame {
 
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
         // TODO add your handling code here:
-        if (validar() == true) {
+        if (validar() ) {
             switch (lblaction.getText()) {
                 case "Add":
                     guardar();
@@ -990,7 +1189,7 @@ public class personalForm extends javax.swing.JFrame {
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
         // TODO add your handling code here:
-        txtrucci.requestFocus();
+        jdcfechaingreso.transferFocus();
     }//GEN-LAST:event_txtcodigoActionPerformed
 
     private void txtcodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoKeyReleased
@@ -1056,14 +1255,16 @@ public class personalForm extends javax.swing.JFrame {
     private void txtrucciKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtrucciKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            txtcodigo.requestFocus();
+            jdcfechaingreso.transferFocus();
 
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtnombre.requestFocus();
         }
     }//GEN-LAST:event_txtrucciKeyPressed
 
     private void txtrucciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtrucciActionPerformed
         // TODO add your handling code here:
-        b_guardar.requestFocus();
+
     }//GEN-LAST:event_txtrucciActionPerformed
 
     private void txtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnombreActionPerformed
@@ -1072,6 +1273,12 @@ public class personalForm extends javax.swing.JFrame {
 
     private void txtnombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtrucci.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtapellido.requestFocus();
+        }
     }//GEN-LAST:event_txtnombreKeyPressed
 
     private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
@@ -1084,6 +1291,12 @@ public class personalForm extends javax.swing.JFrame {
 
     private void txtapellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtapellidoKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtnombre.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jdcfechanac.transferFocus();
+        }
     }//GEN-LAST:event_txtapellidoKeyPressed
 
     private void txtapellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtapellidoKeyReleased
@@ -1092,9 +1305,9 @@ public class personalForm extends javax.swing.JFrame {
 
     private void txtsucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtsucursalKeyPressed
         // TODO add your handling code here:
-        
+
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
-            txttelefono.requestFocus();
+            txtbarrio.requestFocus();
 
         } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txtsucursal.getText().length() == 0) {
@@ -1103,11 +1316,172 @@ public class personalForm extends javax.swing.JFrame {
                 dp.setLocationRelativeTo(null);
                 dp.lblejecucion.setText("con_per");
                 dp.setVisible(true);
-            }else{
-         //   listar_empresa(txtcodempresa.getText());
+            } else {
+                listarsucursal(txtsucursal.getText());
             }
-        } 
+        }
     }//GEN-LAST:event_txtsucursalKeyPressed
+
+    private void txtsucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsucursalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtsucursalActionPerformed
+
+    private void jdcfechaingresoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdcfechaingresoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jdcfechaingresoKeyPressed
+
+    private void txtpaisKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpaisKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtapellido.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtpais.getText().length() == 0) {
+                paisVista dp = new paisVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("con_per");
+                dp.setVisible(true);
+            } else {
+                listarpais(txtpais.getText());
+            }
+        }
+    }//GEN-LAST:event_txtpaisKeyPressed
+
+    private void txtpaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpaisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtpaisActionPerformed
+
+    private void txtdptoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdptoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtpais.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtdpto.getText().length() == 0) {
+                departamentoVista dp = new departamentoVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("con_per");
+                dp.setVisible(true);
+            } else {
+                listardpto(txtdpto.getText());
+            }
+        }
+    }//GEN-LAST:event_txtdptoKeyPressed
+
+    private void txtciudadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtciudadKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtdpto.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtciudad.getText().length() == 0) {
+                ciudadVista dp = new ciudadVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("con_per");
+                dp.setVisible(true);
+            } else {
+                listarciudad(txtciudad.getText());
+            }
+        }
+    }//GEN-LAST:event_txtciudadKeyPressed
+
+    private void txtbarrioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbarrioKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtciudad.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtbarrio.getText().length() == 0) {
+                barrioVista dp = new barrioVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("con_per");
+                dp.setVisible(true);
+            } else {
+                listarbarrio(txtbarrio.getText());
+            }
+        }
+    }//GEN-LAST:event_txtbarrioKeyPressed
+
+    private void txtprofesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprofesionKeyPressed
+        // TODO add your handling code here:
+
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtsucursal.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtprofesion.getText().length() == 0) {
+                profesionVista dp = new profesionVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("con_per");
+                dp.setVisible(true);
+            } else {
+                listarprofesion(txtprofesion.getText());
+            }
+        }
+    }//GEN-LAST:event_txtprofesionKeyPressed
+
+    private void txtpaisFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtpaisFocusLost
+        // TODO add your handling code here:
+        if (txtpais.getText().length() > 0)
+            listarpais(txtpais.getText());
+    }//GEN-LAST:event_txtpaisFocusLost
+
+    private void txtdptoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdptoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtdptoKeyReleased
+
+    private void txtcasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcasaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcasaActionPerformed
+
+    private void txtcasaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcasaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtprofesion.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txttelefono.requestFocus();
+        }
+    }//GEN-LAST:event_txtcasaKeyPressed
+
+    private void txttelefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtcasa.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtemail.requestFocus();
+        }
+    }//GEN-LAST:event_txttelefonoKeyPressed
+
+    private void txtemailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtemailKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txttelefono.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txtreferencia.requestFocus();
+        }
+    }//GEN-LAST:event_txtemailKeyPressed
+
+    private void txtreferenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtreferenciaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            txtemail.requestFocus();
+
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            b_guardar.requestFocus();
+        }
+    }//GEN-LAST:event_txtreferenciaKeyPressed
+
+    private void jdcfechanacKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jdcfechanacKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jdcfechanacKeyPressed
 
     /**
      * @param args the command line arguments
@@ -1125,147 +1499,17 @@ public class personalForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(personalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(personalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(personalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(personalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
                 new personalForm().setVisible(true);
             }
         });
@@ -1318,11 +1562,11 @@ public class personalForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem m_guardar;
     private javax.swing.JMenuItem m_salir;
     private javax.swing.JTextField txtapellido;
-    private javax.swing.JTextField txtbarrio;
+    public static javax.swing.JTextField txtbarrio;
     private javax.swing.JTextField txtcasa;
-    private javax.swing.JTextField txtciudad;
+    public static javax.swing.JTextField txtciudad;
     public static javax.swing.JTextField txtcodigo;
-    private javax.swing.JTextField txtdpto;
+    public static javax.swing.JTextField txtdpto;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnombrebarrio;
@@ -1331,8 +1575,8 @@ public class personalForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtnombrepais;
     private javax.swing.JTextField txtnombreprofesion;
     private javax.swing.JTextField txtnombresucursal;
-    private javax.swing.JTextField txtpais;
-    private javax.swing.JTextField txtprofesion;
+    public static javax.swing.JTextField txtpais;
+    public static javax.swing.JTextField txtprofesion;
     private javax.swing.JTextField txtreferencia;
     private javax.swing.JTextField txtrucci;
     public static javax.swing.JTextField txtsucursal;

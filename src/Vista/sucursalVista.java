@@ -132,7 +132,7 @@ public class sucursalVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(

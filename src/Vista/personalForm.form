@@ -79,7 +79,7 @@
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+          <Color blue="d8" green="ec" red="e9" type="rgb"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -89,109 +89,106 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                  <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel12" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel16" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel17" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel18" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel12" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel16" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel17" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel18" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jrdsoltero" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jrdsoltero" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jrdcasado" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jrdseparado" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jrdviudo" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtpais" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombrepais" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtdpto" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombredpto" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtciudad" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombreciudad" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtbarrio" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombrebarrio" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtsucursal" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombresucursal" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtprofesion" min="-2" pref="60" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtnombreprofesion" min="-2" pref="159" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtcasa" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                              <Component id="txttelefono" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="txtemail" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="txtreferencia" alignment="0" min="-2" pref="429" max="-2" attributes="0"/>
-                              <Component id="txtapellido" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                              <Component id="jdcfechanac" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jrbmasculino" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jrbfemenino" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="txtcodigo" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
-                              <Component id="txtrucci" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                              <Component id="txtnombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                              <Component id="jdcfechaingreso" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="jrdcasado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jrdseparado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jrdviudo" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="txtcasa" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="txttelefono" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                      <Component id="txtemail" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                      <Component id="txtreferencia" alignment="0" min="-2" pref="429" max="-2" attributes="0"/>
+                      <Component id="txtapellido" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                      <Component id="jdcfechanac" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jrbmasculino" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jrbfemenino" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="txtcodigo" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
+                      <Component id="txtrucci" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                      <Component id="txtnombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                      <Component id="jdcfechaingreso" alignment="0" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtprofesion" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombreprofesion" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtsucursal" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombresucursal" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtbarrio" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombrebarrio" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtciudad" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombreciudad" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtdpto" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombredpto" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="txtpais" min="-2" pref="60" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtnombrepais" min="-2" pref="227" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="203" pref="203" max="-2" attributes="0"/>
-                          <Component id="b_guardar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="b_guardarynuevo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="b_eliminar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                          <Component id="b_cancelar" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="jToolBar1" min="-2" pref="711" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="128" pref="23" max="32767" attributes="0"/>
               </Group>
+              <Group type="102" attributes="0">
+                  <EmptySpace min="203" pref="203" max="-2" attributes="0"/>
+                  <Component id="b_guardar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Component id="b_guardarynuevo" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Component id="b_eliminar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                  <Component id="b_cancelar" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <Component id="jToolBar1" min="-2" pref="711" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -435,6 +432,9 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="dd-MM-y"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jdcfechaingresoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombre">
           <Events>
@@ -464,6 +464,9 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="dd-MM-y"/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jdcfechanacKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -477,9 +480,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbmasculino">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupSexo"/>
             </Property>
@@ -488,9 +488,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbfemenino">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupSexo"/>
             </Property>
@@ -504,9 +501,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrdsoltero">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupEstadoCivil"/>
             </Property>
@@ -515,9 +509,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrdcasado">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupEstadoCivil"/>
             </Property>
@@ -526,9 +517,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrdseparado">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupEstadoCivil"/>
             </Property>
@@ -537,9 +525,6 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrdviudo">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f5" green="f5" red="f5" type="rgb"/>
-            </Property>
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="groupEstadoCivil"/>
             </Property>
@@ -550,6 +535,14 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtpaisFocusLost"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtpaisActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtpaisKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
           <Properties>
@@ -558,11 +551,19 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombrepais">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombredpto">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -570,6 +571,13 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtdptoKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtdptoKeyReleased"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
@@ -583,6 +591,10 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombreciudad">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -590,9 +602,19 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtciudadKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombrebarrio">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -600,6 +622,12 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtbarrioKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
@@ -611,6 +639,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtsucursalActionPerformed"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtsucursalKeyPressed"/>
           </Events>
           <AuxValues>
@@ -624,6 +653,10 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombresucursal">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -636,9 +669,19 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtprofesionKeyPressed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txtnombreprofesion">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="fa" green="fa" red="fa" type="rgb"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
@@ -646,6 +689,10 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtcasaActionPerformed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtcasaKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
           <Properties>
@@ -656,6 +703,9 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txttelefonoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
@@ -671,6 +721,9 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtemailKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel19">
           <Properties>
@@ -681,6 +734,9 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtreferenciaKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
