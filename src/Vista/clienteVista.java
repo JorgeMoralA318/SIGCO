@@ -5,10 +5,8 @@
  */
 package Vista;
 
-import Tabla.tablaPersonal;
+import Tabla.tablaCliente;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -18,24 +16,25 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Helena
  */
-public class personalVista extends javax.swing.JFrame {
+public class clienteVista extends javax.swing.JFrame {
 
-    tablaPersonal tab = new tablaPersonal();
-    personalForm form = new personalForm();
-    cargoPersonalForm pform;
+    tablaCliente tab = new tablaCliente();
+    clienteForm form = new clienteForm();
+    mostrarFecha fecha = new mostrarFecha();
 
     /**
      * Creates new form departamentoVista
      */
-    public personalVista() {
+    public clienteVista() {
         initComponents();
-        mostrar("");
-        mostrarFechaHora();
+        txtbuscar.selectAll();
+        mostrar("", buscarParametro());
+        lblfecha.setText(fecha.mostrarFecha());
     }
 
-    private void mostrar(String buscar) {
+    private void mostrar(String buscar, String parametro) {
         //cargar Jtable tabla
-        tab.mostrar(buscar);
+        tab.mostrar(buscar, parametro);
         //Centrar Columna los valores de la columna 0
         DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
         centrar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -43,56 +42,27 @@ public class personalVista extends javax.swing.JFrame {
         txtbuscar.requestFocus();
     }
 
-    private void mostrarFechaHora() {
-        //mostrar fecha del sistema
-        LocalDate date = LocalDate.now();
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int año = date.getYear();
-        Calendar c = Calendar.getInstance();
-        int sem = c.get(Calendar.DAY_OF_WEEK);
-        String español = "";
-        switch (sem) {
-            case 1:
-                español = "domingo";
-                break;
-            case 2:
-                español = "Lunes";
-                break;
-            case 3:
-                español = "Martes";
-                break;
-            case 4:
-                español = "Miercoles";
-                break;
-            case 5:
-                español = "Jueves";
-                break;
-            case 6:
-                español = "Vienes";
-                break;
-            case 7:
-                español = "Sábado";
-                break;
-        }
-
-        lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
-    }
-    
-    
-    
-    void cambiarform(){
+    void cambiarform() {
         form.setResizable(false);
-        form.setTitle("Mantenimiento Personal");
+        form.setTitle("Mantenimiento Cliente");
         form.setLocationRelativeTo(null);
         form.setVisible(true);
         this.dispose();
     }
-    
-    
 
-    
-
+    private String buscarParametro() {
+        String parametro = "";
+        if (checkcodigo.isSelected()) {
+            parametro = "codigo";
+        } else if (checkruc.isSelected()) {
+            parametro = "ruc_ci";
+        } else if (checknombre.isSelected()) {
+            parametro = "nombre";
+        } else if (checkapellido.isSelected()) {
+            parametro = "apellido";
+        }
+        return parametro;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,10 +74,10 @@ public class personalVista extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton3 = new javax.swing.JButton();
+        grupo = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        txtbuscar = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         lblfecha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -119,8 +89,12 @@ public class personalVista extends javax.swing.JFrame {
         b_nuevo = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
         b_salir = new javax.swing.JButton();
-        b_elegir = new javax.swing.JButton();
+        txtbuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        checkcodigo = new javax.swing.JCheckBox();
+        checkruc = new javax.swing.JCheckBox();
+        checknombre = new javax.swing.JCheckBox();
+        checkapellido = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         m_update = new javax.swing.JMenuItem();
@@ -132,7 +106,7 @@ public class personalVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
+        jPanel1.setBackground(new java.awt.Color(248, 249, 249));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -155,15 +129,6 @@ public class personalVista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtbuscarKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtbuscarKeyReleased(evt);
-            }
-        });
-
         jToolBar1.setBackground(java.awt.SystemColor.inactiveCaption);
         jToolBar1.setRollover(true);
 
@@ -175,13 +140,17 @@ public class personalVista extends javax.swing.JFrame {
         jToolBar1.add(jLabel1);
         jToolBar1.add(jSeparator2);
 
-        lblprograma.setText("Personal");
+        lblprograma.setText("Cliente");
         jToolBar1.add(lblprograma);
         jToolBar1.add(jSeparator3);
         jToolBar1.add(lblejecucion);
         lblejecucion.getAccessibleContext().setAccessibleName("lblejecucion");
 
+        b_nuevo.setBackground(new java.awt.Color(0, 153, 153));
+        b_nuevo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_nuevo.setForeground(new java.awt.Color(255, 255, 255));
         b_nuevo.setText("Nuevo");
+        b_nuevo.setBorderPainted(false);
         b_nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +158,11 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
+        b_modificar.setBackground(new java.awt.Color(0, 153, 153));
+        b_modificar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_modificar.setForeground(new java.awt.Color(255, 255, 255));
         b_modificar.setText("Modificar");
+        b_modificar.setBorderPainted(false);
         b_modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +170,11 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
+        b_salir.setBackground(new java.awt.Color(0, 153, 153));
+        b_salir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_salir.setForeground(new java.awt.Color(255, 255, 255));
         b_salir.setText("Salir");
+        b_salir.setBorderPainted(false);
         b_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,55 +182,120 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
-        b_elegir.setText("Elegir");
+        txtbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtbuscarActionPerformed(evt);
+            }
+        });
+        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyReleased(evt);
+            }
+        });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/buscar.png"))); // NOI18N
+        jLabel2.setText("Filtros:");
+
+        checkcodigo.setBackground(new java.awt.Color(248, 249, 249));
+        grupo.add(checkcodigo);
+        checkcodigo.setText("Código");
+        checkcodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        checkcodigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkcodigoMouseClicked(evt);
+            }
+        });
+
+        checkruc.setBackground(new java.awt.Color(248, 249, 249));
+        grupo.add(checkruc);
+        checkruc.setText("CI-RUC");
+        checkruc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        checkruc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkrucMouseClicked(evt);
+            }
+        });
+
+        checknombre.setBackground(new java.awt.Color(248, 249, 249));
+        grupo.add(checknombre);
+        checknombre.setSelected(true);
+        checknombre.setText("Nombre");
+        checknombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        checknombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checknombreMouseClicked(evt);
+            }
+        });
+
+        checkapellido.setBackground(new java.awt.Color(248, 249, 249));
+        grupo.add(checkapellido);
+        checkapellido.setText("Apellido");
+        checkapellido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        checkapellido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkapellidoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(b_nuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_elegir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_salir))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(checkcodigo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(checkruc)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(checknombre)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(checkapellido))))
+                .addGap(32, 32, 32))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtbuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b_salir)
-                    .addComponent(b_elegir)
-                    .addComponent(b_modificar)
-                    .addComponent(b_nuevo))
-                .addGap(39, 39, 39)
+                    .addComponent(jLabel2)
+                    .addComponent(checkcodigo)
+                    .addComponent(checkruc)
+                    .addComponent(checknombre)
+                    .addComponent(checkapellido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jMenu1.setBorder(null);
         jMenu1.setText("Archivo");
+        jMenu1.setBorderPainted(true);
 
         m_update.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.ALT_MASK));
         m_update.setText("Nuevo");
@@ -310,7 +352,7 @@ public class personalVista extends javax.swing.JFrame {
 
     private void txtbuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtbuscarKeyReleased
         // TODO add your handling code here:
-        mostrar(txtbuscar.getText());
+        mostrar(txtbuscar.getText(), buscarParametro());
     }//GEN-LAST:event_txtbuscarKeyReleased
 
     private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
@@ -328,11 +370,11 @@ public class personalVista extends javax.swing.JFrame {
                 String control = lblejecucion.getText();
                 switch (control) {
                     case "":
-                       cambiarform();
-                       form.txtcodigo.setText(codigo);
+                        cambiarform();
+                        form.txtcodigo.setText(codigo);
                         break;
-                     case "cargo_salario":
-                       pform.txtpersonal.setText(codigo);
+                    case "cargo_salario":
+
                         break;
 
                 }
@@ -351,7 +393,7 @@ public class personalVista extends javax.swing.JFrame {
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         // TODO add your handling code here:
-       cambiarform();
+        cambiarform();
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
@@ -366,7 +408,6 @@ public class personalVista extends javax.swing.JFrame {
 
             cambiarform();
             form.txtcodigo.setText(codigo);
-
 
         }
     }//GEN-LAST:event_b_modificarActionPerformed
@@ -387,14 +428,42 @@ public class personalVista extends javax.swing.JFrame {
 
     private void m_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_updateActionPerformed
         // TODO add your handling code here:
-  cambiarform();
-       
+        cambiarform();
+
     }//GEN-LAST:event_m_updateActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void txtbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbuscarActionPerformed
+
+    private void checkcodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkcodigoMouseClicked
+        // TODO add your handling code here:
+        txtbuscar.requestFocus();
+        txtbuscar.selectAll();
+    }//GEN-LAST:event_checkcodigoMouseClicked
+
+    private void checkrucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkrucMouseClicked
+        // TODO add your handling code here:
+        txtbuscar.requestFocus();
+        txtbuscar.selectAll();
+    }//GEN-LAST:event_checkrucMouseClicked
+
+    private void checknombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checknombreMouseClicked
+        // TODO add your handling code here:
+        txtbuscar.requestFocus();
+        txtbuscar.selectAll();
+    }//GEN-LAST:event_checknombreMouseClicked
+
+    private void checkapellidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkapellidoMouseClicked
+        // TODO add your handling code here:
+        txtbuscar.requestFocus();
+        txtbuscar.selectAll();
+    }//GEN-LAST:event_checkapellidoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -413,92 +482,35 @@ public class personalVista extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clienteVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clienteVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clienteVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(clienteVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+   
+      
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new personalVista().setVisible(true);
+                new clienteVista().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_elegir;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JButton b_salir;
+    private javax.swing.JCheckBox checkapellido;
+    private javax.swing.JCheckBox checkcodigo;
+    private javax.swing.JCheckBox checknombre;
+    private javax.swing.JCheckBox checkruc;
+    private javax.swing.ButtonGroup grupo;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

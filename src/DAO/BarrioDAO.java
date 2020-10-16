@@ -82,7 +82,7 @@ public class BarrioDAO{
             ps.setString(3, vo.getCodciudad());
            int r =ps.executeUpdate();
             if (r>0){
-                DesktopNotify.showDesktopMessage("Mensaje", "Registrado Exitosamente", 1, 5000);
+                
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());

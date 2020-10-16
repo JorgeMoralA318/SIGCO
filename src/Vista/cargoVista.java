@@ -22,6 +22,7 @@ public class cargoVista extends javax.swing.JFrame {
 
     tablaCargo tab = new tablaCargo();
     cargoForm form = new cargoForm();
+    cargoPersonalForm cs;
 
     /**
      * Creates new form departamentoVista
@@ -324,6 +325,9 @@ public class cargoVista extends javax.swing.JFrame {
                     case "":
                         cambiarform();
                         form.txtcodigo.setText(codigo);
+                        break;
+                        case "cargo_salario":
+                        cs.txtcargo.setText(codigo);
                         break;
 
                 }

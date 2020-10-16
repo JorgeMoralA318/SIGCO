@@ -5,10 +5,8 @@
  */
 package Vista;
 
-import Tabla.tablaPersonal;
+import Tabla.tablaCargoPersonal;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -18,19 +16,19 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Helena
  */
-public class personalVista extends javax.swing.JFrame {
+public class cargoPersonalVista extends javax.swing.JFrame {
 
-    tablaPersonal tab = new tablaPersonal();
-    personalForm form = new personalForm();
-    cargoPersonalForm pform;
+    tablaCargoPersonal tab = new tablaCargoPersonal();
+    cargoPersonalForm form = new cargoPersonalForm();
+    mostrarFecha fecha = new mostrarFecha();
 
     /**
      * Creates new form departamentoVista
      */
-    public personalVista() {
+    public cargoPersonalVista() {
         initComponents();
         mostrar("");
-        mostrarFechaHora();
+        lblfecha.setText(fecha.mostrarFecha());
     }
 
     private void mostrar(String buscar) {
@@ -43,47 +41,13 @@ public class personalVista extends javax.swing.JFrame {
         txtbuscar.requestFocus();
     }
 
-    private void mostrarFechaHora() {
-        //mostrar fecha del sistema
-        LocalDate date = LocalDate.now();
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int año = date.getYear();
-        Calendar c = Calendar.getInstance();
-        int sem = c.get(Calendar.DAY_OF_WEEK);
-        String español = "";
-        switch (sem) {
-            case 1:
-                español = "domingo";
-                break;
-            case 2:
-                español = "Lunes";
-                break;
-            case 3:
-                español = "Martes";
-                break;
-            case 4:
-                español = "Miercoles";
-                break;
-            case 5:
-                español = "Jueves";
-                break;
-            case 6:
-                español = "Vienes";
-                break;
-            case 7:
-                español = "Sábado";
-                break;
-        }
-
-        lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
-    }
+    
     
     
     
     void cambiarform(){
         form.setResizable(false);
-        form.setTitle("Mantenimiento Personal");
+        form.setTitle("Mantenimiento Cargo Salario");
         form.setLocationRelativeTo(null);
         form.setVisible(true);
         this.dispose();
@@ -107,7 +71,6 @@ public class personalVista extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        txtbuscar = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         lblfecha = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JToolBar.Separator();
@@ -120,7 +83,8 @@ public class personalVista extends javax.swing.JFrame {
         b_modificar = new javax.swing.JButton();
         b_salir = new javax.swing.JButton();
         b_elegir = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        txtbuscar = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         m_update = new javax.swing.JMenuItem();
@@ -132,7 +96,7 @@ public class personalVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
+        jPanel1.setBackground(new java.awt.Color(247, 249, 249));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -155,15 +119,6 @@ public class personalVista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtbuscarKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtbuscarKeyReleased(evt);
-            }
-        });
-
         jToolBar1.setBackground(java.awt.SystemColor.inactiveCaption);
         jToolBar1.setRollover(true);
 
@@ -181,6 +136,7 @@ public class personalVista extends javax.swing.JFrame {
         jToolBar1.add(lblejecucion);
         lblejecucion.getAccessibleContext().setAccessibleName("lblejecucion");
 
+        b_nuevo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         b_nuevo.setText("Nuevo");
         b_nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_nuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +145,7 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
+        b_modificar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         b_modificar.setText("Modificar");
         b_modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +154,7 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
+        b_salir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         b_salir.setText("Salir");
         b_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_salir.addActionListener(new java.awt.event.ActionListener() {
@@ -205,17 +163,28 @@ public class personalVista extends javax.swing.JFrame {
             }
         });
 
+        b_elegir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         b_elegir.setText("Elegir");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/buscar.png"))); // NOI18N
+        txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtbuscarKeyReleased(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel3.setText("Buscar :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(b_nuevo)
@@ -225,30 +194,29 @@ public class personalVista extends javax.swing.JFrame {
                         .addComponent(b_elegir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_salir))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtbuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b_salir)
-                    .addComponent(b_elegir)
-                    .addComponent(b_modificar)
-                    .addComponent(b_nuevo))
-                .addGap(39, 39, 39)
+                    .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_elegir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -331,9 +299,6 @@ public class personalVista extends javax.swing.JFrame {
                        cambiarform();
                        form.txtcodigo.setText(codigo);
                         break;
-                     case "cargo_salario":
-                       pform.txtpersonal.setText(codigo);
-                        break;
 
                 }
 
@@ -413,83 +378,20 @@ public class personalVista extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cargoPersonalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cargoPersonalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cargoPersonalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(personalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(cargoPersonalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+       
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new personalVista().setVisible(true);
+                new cargoPersonalVista().setVisible(true);
             }
         });
     }
@@ -501,7 +403,7 @@ public class personalVista extends javax.swing.JFrame {
     private javax.swing.JButton b_salir;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
