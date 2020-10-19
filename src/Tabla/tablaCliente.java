@@ -51,7 +51,7 @@ public class tablaCliente{
         String sql ="SELECT a.codigo,a.ruc_ci,CONCAT(a.nombre,\" \",a.apellido) AS nombre,\n" +
 "                b.ciudad,c.barrio,a.telefono,a.email FROM cliente a\n" +
 "                INNER JOIN Ciudad b ON a.codCiudad = b.codigo\n" +
-"                INNER JOIN Barrio c ON a.codBarrio = c.codigo WHERE a."+parametro+" LIKE ? AND a.estado ='A'";
+"                INNER JOIN Barrio c ON a.codBarrio = c.codigo WHERE a."+parametro+" LIKE ? ";
 
         try {
             ps = conec.getConnection().prepareStatement(sql);

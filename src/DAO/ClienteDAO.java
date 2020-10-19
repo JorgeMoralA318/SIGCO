@@ -2,7 +2,6 @@ package DAO;
 
 import Conexion.Conectar;
 import VO.ClienteVO;
-import ds.desktop.notify.DesktopNotify;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class ClienteDAO{
     
-    
+    mensaje aviso = new mensaje();
         public String obtener_id() {
         Conectar cn = null;
         java.sql.Connection con;
@@ -38,7 +37,7 @@ public class ClienteDAO{
 
 
 /*Metodo listar*/
-    public ArrayList<ClienteVO> Listar_ClienteVO(String codigo){
+   public ArrayList<ClienteVO> Listar_ClienteVO(String codigo){
         ArrayList<ClienteVO> list = new ArrayList<ClienteVO>();
         Conectar conec = new Conectar();
         String sql = "SELECT * FROM cliente WHERE codigo = ?;";
@@ -46,7 +45,7 @@ public class ClienteDAO{
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
-            ps.setString(1, codigo);
+            ps.setString(1,codigo);
             rs = ps.executeQuery();
             while(rs.next()){
                 ClienteVO vo = new ClienteVO();
@@ -57,20 +56,22 @@ public class ClienteDAO{
                 vo.setFechaNac(rs.getString(5));
                 vo.setFechaIng(rs.getString(6));
                 vo.setSexo(rs.getObject(7));
-                vo.setTelefono(rs.getString(8));
-                vo.setCodSucursal(rs.getString(9));
-                vo.setCodProfesion(rs.getString(10));
-                vo.setEmail(rs.getString(11));
-                vo.setCodPais(rs.getString(12));
-                vo.setCodDepartamento(rs.getString(13));
-                vo.setCodCiudad(rs.getString(14));
-                vo.setCodBarrio(rs.getString(15));
-                vo.setNroCasa(rs.getString(16));
-                vo.setCodCobrador(rs.getString(17));
-                vo.setCodVendedor(rs.getString(18));
-                vo.setLimiteCredito(rs.getObject(19));
-                vo.setEstado(rs.getObject(20));
-                vo.setObs(rs.getObject(21));
+                vo.setEstadoCivil(rs.getObject(8));
+                vo.setTelefono(rs.getString(9));
+                vo.setCodSucursal(rs.getString(10));
+                vo.setCodProfesion(rs.getString(11));
+                vo.setEmail(rs.getString(12));
+                vo.setCodPais(rs.getString(13));
+                vo.setCodDepartamento(rs.getString(14));
+                vo.setCodCiudad(rs.getString(15));
+                vo.setCodBarrio(rs.getString(16));
+                vo.setNroCasa(rs.getString(17));
+                vo.setCodCobrador(rs.getString(18));
+                vo.setCodVendedor(rs.getString(19));
+                vo.setLimiteCredito(rs.getObject(20));
+                vo.setIsdeuda(rs.getInt(21));
+                vo.setIsSolicitud(rs.getInt(22));
+                vo.setObs(rs.getObject(23));
                 list.add(vo);
             }
         }catch(SQLException ex){
@@ -82,16 +83,17 @@ public class ClienteDAO{
                 ps.close();
                 rs.close();
                 conec.desconectar();
-            }catch(SQLException ex){}
+            }catch(Exception ex){}
         }
         return list;
     }
 
-
 /*Metodo agregar*/
     public void Agregar_ClienteVO(ClienteVO vo){
         Conectar conec = new Conectar();
-        String sql = "INSERT INTO cliente (codigo, ruc_ci, nombre, apellido, fechaNac, sexo, telefono, codSucursal, codProfesion, email, codPais, codDepartamento, codCiudad, codBarrio, nroCasa, codCobrador, codVendedor, limiteCredito, estado, obs) VALUES(?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO cliente (codigo, ruc_ci, nombre, apellido,"+
+                " fechaNac, sexo,estadoCivil ,telefono, codSucursal, codProfesion,"+
+                " email, codPais, codDepartamento, codCiudad, codBarrio, nroCasa, codCobrador, codVendedor, limiteCredito,  obs) VALUES(?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -101,23 +103,23 @@ public class ClienteDAO{
             ps.setString(4, vo.getApellido());
             ps.setString(5, vo.getFechaNac());
             ps.setObject(6, vo.getSexo());
-            ps.setString(7, vo.getTelefono());
-            ps.setString(8, vo.getCodSucursal());
-            ps.setString(9, vo.getCodProfesion());
-            ps.setString(10, vo.getEmail());
-            ps.setString(11, vo.getCodPais());
-            ps.setString(12, vo.getCodDepartamento());
-            ps.setString(13, vo.getCodCiudad());
-            ps.setString(14, vo.getCodBarrio());
-            ps.setString(15, vo.getNroCasa());
-            ps.setString(16, vo.getCodCobrador());
-            ps.setString(17, vo.getCodVendedor());
-            ps.setObject(18, vo.getLimiteCredito());
-            ps.setObject(19, vo.getEstado());
+            ps.setObject(7 , vo.getEstadoCivil());
+            ps.setString(8, vo.getTelefono());
+            ps.setString(9, vo.getCodSucursal());
+            ps.setString(10, vo.getCodProfesion());
+            ps.setString(11, vo.getEmail());
+            ps.setString(12, vo.getCodPais());
+            ps.setString(13, vo.getCodDepartamento());
+            ps.setString(14, vo.getCodCiudad());
+            ps.setString(15, vo.getCodBarrio());
+            ps.setString(16, vo.getNroCasa());
+            ps.setString(17, vo.getCodCobrador());
+            ps.setString(18, vo.getCodVendedor());
+            ps.setObject(19, vo.getLimiteCredito());
             ps.setObject(20, vo.getObs());
             int r = ps.executeUpdate();
             if (r > 0) {
-                DesktopNotify.showDesktopMessage("Mensaje", "Registrado Exitosamente", 1, 5000);
+            aviso.guardar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -135,7 +137,7 @@ public class ClienteDAO{
 /*Metodo Modificar*/
     public void Modificar_ClienteVO(ClienteVO vo){
         Conectar conec = new Conectar();
-        String sql = "UPDATE cliente SET ruc_ci = ?, nombre = ?, apellido = ?, fechaNac = ?, sexo = ?, telefono = ?, codSucursal = ?, codProfesion = ?, email = ?, codPais = ?, codDepartamento = ?, codCiudad = ?, codBarrio = ?, nroCasa = ?, codCobrador = ?, codVendedor = ?, limiteCredito = ?, estado = ?, obs = ? WHERE codigo = ?;";
+        String sql = "UPDATE cliente SET ruc_ci = ?, nombre = ?, apellido = ?, fechaNac = ?, sexo = ?,estadoCivil=?, telefono = ?, codSucursal = ?, codProfesion = ?, email = ?, codPais = ?, codDepartamento = ?, codCiudad = ?, codBarrio = ?, nroCasa = ?, codCobrador = ?, codVendedor = ?, limiteCredito = ?, obs = ? WHERE codigo = ?;";
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
@@ -145,24 +147,24 @@ public class ClienteDAO{
             ps.setString(3, vo.getApellido());
             ps.setString(4, vo.getFechaNac());
             ps.setObject(5, vo.getSexo());
-            ps.setString(6, vo.getTelefono());
-            ps.setString(7, vo.getCodSucursal());
-            ps.setString(8, vo.getCodProfesion());
-            ps.setString(9, vo.getEmail());
-            ps.setString(10, vo.getCodPais());
-            ps.setString(11, vo.getCodDepartamento());
-            ps.setString(12, vo.getCodCiudad());
-            ps.setString(13, vo.getCodBarrio());
-            ps.setString(14, vo.getNroCasa());
-            ps.setString(15, vo.getCodCobrador());
-            ps.setString(16, vo.getCodVendedor());
-            ps.setObject(17, vo.getLimiteCredito());
-            ps.setObject(18, vo.getEstado());
+            ps.setObject(6, vo.getEstadoCivil());
+            ps.setString(7, vo.getTelefono());
+            ps.setString(8, vo.getCodSucursal());
+            ps.setString(9, vo.getCodProfesion());
+            ps.setString(10, vo.getEmail());
+            ps.setString(11, vo.getCodPais());
+            ps.setString(12, vo.getCodDepartamento());
+            ps.setString(13, vo.getCodCiudad());
+            ps.setString(14, vo.getCodBarrio());
+            ps.setString(15, vo.getNroCasa());
+            ps.setString(16, vo.getCodCobrador());
+            ps.setString(17, vo.getCodVendedor());
+            ps.setObject(18, vo.getLimiteCredito());
             ps.setObject(19, vo.getObs());
             ps.setString(20, vo.getCodigo());
             int r = ps.executeUpdate();
             if (r > 0) {
-                DesktopNotify.showDesktopMessage("Mensaje", "Actualizado Exitosamente", 1, 5000);
+                aviso.actualizar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -187,7 +189,7 @@ public class ClienteDAO{
             ps.setString(1, vo.getCodigo());
             int r = ps.executeUpdate();
             if (r>0){
-                DesktopNotify.showDesktopMessage("Mensaje", " Registro Eliminado", 1, 5000);
+                aviso.eliminar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());

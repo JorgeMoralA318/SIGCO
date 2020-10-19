@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class BarrioDAO{
     
-    
+   mensaje aviso = new mensaje(); 
     
     public String obtener_id() {
         Conectar cn = null;
@@ -82,7 +82,7 @@ public class BarrioDAO{
             ps.setString(3, vo.getCodciudad());
            int r =ps.executeUpdate();
             if (r>0){
-                
+              aviso.guardar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -110,7 +110,7 @@ public class BarrioDAO{
             ps.setString(3, vo.getCodigo());
            int r =ps.executeUpdate();
             if (r>0){
-                DesktopNotify.showDesktopMessage("Mensaje", "Actualizado Exitosamente", 1, 5000);
+                aviso.actualizar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());
@@ -135,7 +135,7 @@ public class BarrioDAO{
             ps.setString(1, vo.getCodigo());
             int r =ps.executeUpdate();
             if (r>0){
-                DesktopNotify.showDesktopMessage("Mensaje", " Registro Eliminado", 1, 5000);
+                aviso.eliminar();
             }
         }catch(SQLException ex){
             System.out.println(ex.getMessage());

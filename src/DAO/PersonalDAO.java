@@ -38,7 +38,7 @@ public class PersonalDAO{
     } 
 
 /*Metodo listar*/
-    public ArrayList<PersonalVO> Listar_PersonalVO(String codigo){
+      public ArrayList<PersonalVO> Listar_PersonalVO(String codigo){
         ArrayList<PersonalVO> list = new ArrayList<PersonalVO>();
         Conectar conec = new Conectar();
         String sql = "SELECT * FROM personal WHERE codigo = ?;";
@@ -46,7 +46,7 @@ public class PersonalDAO{
         PreparedStatement ps = null;
         try{
             ps = conec.getConnection().prepareStatement(sql);
-            ps.setString(1, codigo);
+            ps.setString(1,codigo);
             rs = ps.executeQuery();
             while(rs.next()){
                 PersonalVO vo = new PersonalVO();
@@ -80,8 +80,7 @@ public class PersonalDAO{
                 ps.close();
                 rs.close();
                 conec.desconectar();
-            }catch(SQLException ex){
-            System.out.println(ex);}
+            }catch(Exception ex){}
         }
         return list;
     }

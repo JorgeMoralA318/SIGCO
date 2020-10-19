@@ -6,23 +6,24 @@
 package Vista;
 
 import DAO.BarrioDAO;
+import DAO.Cargo_salarioDAO;
 import DAO.CiudadDAO;
 import DAO.DepartamentoDAO;
 import DAO.PaisDAO;
-import DAO.PersonalDAO;
+import DAO.ClienteDAO;
 import DAO.ProfesionDAO;
 import DAO.SucursalDAO;
 import VO.BarrioVO;
 import VO.CiudadVO;
 import VO.DepartamentoVO;
 import VO.PaisVO;
-import VO.PersonalVO;
+import VO.ClienteVO;
 import VO.ProfesionVO;
 import VO.SucursalVO;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -33,73 +34,33 @@ import javax.swing.JOptionPane;
  */
 public class clienteForm extends javax.swing.JFrame {
 
-    PersonalVO vo = new PersonalVO();
-    PersonalDAO dao = new PersonalDAO();
+    ClienteVO vo = new ClienteVO();
+    ClienteDAO dao = new ClienteDAO();
+    mostrarFecha fecha = new mostrarFecha();
 
     /**
      * Creates new form departamentoVista
      */
     public clienteForm() {
         initComponents();
-        mostrarFechaHora();
-        obtener_codigo();
+        lblfecha.setText(fecha.mostrarFecha());
+        txtcodigo.setText(cod());
+        
     }
 
-    private void mostrarFechaHora() {
-        //mostrar fecha del sistema
-        LocalDate date = LocalDate.now();
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int año = date.getYear();
-        Calendar c = Calendar.getInstance();
-        int sem = c.get(Calendar.DAY_OF_WEEK);
-        String español = "";
-        switch (sem) {
-            case 1:
-                español = "domingo";
-                break;
-            case 2:
-                español = "Lunes";
-                break;
-            case 3:
-                español = "Martes";
-                break;
-            case 4:
-                español = "Miercoles";
-                break;
-            case 5:
-                español = "Jueves";
-                break;
-            case 6:
-                español = "Vienes";
-                break;
-            case 7:
-                español = "Sábado";
-                break;
-        }
-
-        lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
-    }
+ 
 
     //metodo para capturar y enviar datos
     void guardar() {
-        Calendar cal;
-        int d, m, a;
+        Calendar cal = jdcfechanac.getCalendar();;
         String codigo = txtcodigo.getText();
-        String fechaIngreso, fechaNac;
-//        cal = jdcfechaingreso.getCalendar();
-   //     d = cal.get(Calendar.DAY_OF_MONTH);
- //       m = cal.get(Calendar.MONTH);
-   //     a = cal.get(Calendar.YEAR) - 1900;
-    //    fechaIngreso = (new Date(a, m, d)).toString();
         String ruc = txtrucci.getText();
         String nombre = txtnombre.getText();
         String apellido = txtapellido.getText();
-        cal = jdcfechanac.getCalendar();
-        d = cal.get(Calendar.DAY_OF_MONTH);
-        m = cal.get(Calendar.MONTH);
-        a = cal.get(Calendar.YEAR) - 1900;
-        fechaNac = (new Date(a, m, d)).toString();
+        int d = cal.get(Calendar.DAY_OF_MONTH);
+        int m = cal.get(Calendar.MONTH);
+        int a = cal.get(Calendar.YEAR) - 1900;
+        String fechaNac= (new Date(a, m, d)).toString();
         String sexo = sexo();
         String estadoCivil = estadoCivil();
         String pais = txtpais.getText();
@@ -112,10 +73,12 @@ public class clienteForm extends javax.swing.JFrame {
         String telefono = txttelefono.getText();
         String email = txtemail.getText();
         String referencia = txtreferencia.getText();
-
+        String vendedor = txtvendedor.getText();
+        String cobrador = txtcobrador.getText();
+        Object limiteCredito = txtlimiteCredito.getText().replace(".", "");;
+        
         vo.setCodigo(codigo);
-//        vo.setFechaIngreso(fechaIngreso);
-        vo.setCiRuc(ruc);
+        vo.setRuc_ci(ruc);
         vo.setNombre(nombre);
         vo.setApellido(apellido);
         vo.setFechaNac(fechaNac);
@@ -127,33 +90,27 @@ public class clienteForm extends javax.swing.JFrame {
         vo.setCodBarrio(barrio);
         vo.setCodSucursal(sucursal);
         vo.setCodProfesion(profesion);
-        vo.setCasaNro(nrocasa);
+        vo.setCodCobrador(cobrador);
+        vo.setCodVendedor(vendedor);
+        vo.setLimiteCredito(limiteCredito);
+        vo.setNroCasa(nrocasa);
         vo.setTelefono(telefono);
         vo.setEmail(email);
-        vo.setTelefono(telefono);
-        vo.setReferencia(referencia);
+        vo.setObs(referencia);
 
-        dao.Agregar_PersonalVO(vo);
+        dao.Agregar_ClienteVO(vo);
     }
 
     void actualizar() {
-        Calendar cal;
-        int d, m, a;
+        Calendar cal = jdcfechanac.getCalendar();;
         String codigo = txtcodigo.getText();
-        String fechaIngreso, fechaNac;
-//        cal = jdcfechaingreso.getCalendar();
-    //    d = cal.get(Calendar.DAY_OF_MONTH);
-//        m = cal.get(Calendar.MONTH);
-      //  a = cal.get(Calendar.YEAR) - 1900;
-       // fechaIngreso = (new Date(a, m, d)).toString();
         String ruc = txtrucci.getText();
         String nombre = txtnombre.getText();
         String apellido = txtapellido.getText();
-        cal = jdcfechanac.getCalendar();
-        d = cal.get(Calendar.DAY_OF_MONTH);
-        m = cal.get(Calendar.MONTH);
-        a = cal.get(Calendar.YEAR) - 1900;
-        fechaNac = (new Date(a, m, d)).toString();
+        int d = cal.get(Calendar.DAY_OF_MONTH);
+        int m = cal.get(Calendar.MONTH);
+        int a = cal.get(Calendar.YEAR) - 1900;
+        String fechaNac= (new Date(a, m, d)).toString();
         String sexo = sexo();
         String estadoCivil = estadoCivil();
         String pais = txtpais.getText();
@@ -166,10 +123,11 @@ public class clienteForm extends javax.swing.JFrame {
         String telefono = txttelefono.getText();
         String email = txtemail.getText();
         String referencia = txtreferencia.getText();
-
+        String vendedor = txtvendedor.getText();
+        String cobrador = txtcobrador.getText();
+        Object limiteCredito = txtlimiteCredito.getText().replace(".", "");
         vo.setCodigo(codigo);
-//        vo.setFechaIngreso(fechaIngreso);
-        vo.setCiRuc(ruc);
+        vo.setRuc_ci(ruc);
         vo.setNombre(nombre);
         vo.setApellido(apellido);
         vo.setFechaNac(fechaNac);
@@ -181,24 +139,26 @@ public class clienteForm extends javax.swing.JFrame {
         vo.setCodBarrio(barrio);
         vo.setCodSucursal(sucursal);
         vo.setCodProfesion(profesion);
-        vo.setCasaNro(nrocasa);
+        vo.setCodCobrador(cobrador);
+        vo.setCodVendedor(vendedor);
+        vo.setLimiteCredito(limiteCredito);
+        vo.setNroCasa(nrocasa);
         vo.setTelefono(telefono);
         vo.setEmail(email);
-        vo.setTelefono(telefono);
-        vo.setReferencia(referencia);
+        vo.setObs(referencia);
 
-        dao.Modificar_PersonalVO(vo);
+        dao.Modificar_ClienteVO(vo);
     }
 
     //obtener sexo
     private String sexo() {
-        String sexo = null;
+        String sex = null;
         if (jrbmasculino.isSelected()) {
-            sexo = "M";
+            sex = "M";
         } else if (jrbfemenino.isSelected()) {
-            sexo = "F";
+            sex= "F";
         }
-        return sexo;
+        return sex;
     }
 
     //obtener estado civil
@@ -218,10 +178,10 @@ public class clienteForm extends javax.swing.JFrame {
 
     //metodo paara cerrar formulario actual y abrir principal
     void cambiar_form() {
-        personalVista v = new personalVista();
+        clienteVista v = new clienteVista();
         v.setResizable(false);
         v.setLocationRelativeTo(null);
-        v.setTitle("Personal");
+        v.setTitle("Datos Cliente");
         v.setVisible(true);
         this.dispose();
     }
@@ -249,59 +209,79 @@ public class clienteForm extends javax.swing.JFrame {
         txtrucci.setText("");
     }
 
-    private void obtener_codigo() {
-        dao = new PersonalDAO();
-        txtcodigo.setText("PE-" + dao.obtener_id());
-        txtcodigo.requestFocus();
+    private String cod() {
+        dao = new ClienteDAO();
+        String resultado;
+        int contador = dao.obtener_id().length();
+        String cero = null;
+        switch (contador) {
+            case 1:
+                cero = "0000";
+                break;
+            case 2:
+                cero = "000";
+                break;
+            case 3:
+                cero = "00";
+                break;
+            case 4:
+                cero = "0";
+                break;
+            case 5:
+                cero = "";
+                break;
+        }
+        resultado = cero + dao.obtener_id();
+        return resultado;
     }
 
+
     void listarCodigo(String codigo) {
-        ArrayList<PersonalVO> list = dao.Listar_PersonalVO(codigo);
+        String simbolo = "###,###.##";
+        DecimalFormat df = new DecimalFormat(simbolo);
+        ArrayList<ClienteVO> list = dao.Listar_ClienteVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                Object fila[] = new Object[17];
+                Object fila[] = new Object[19];
                 vo = list.get(i);
                 //almacenamos valores en el vector fila
-                fila[0] = vo.getFechaIngreso();
-                fila[1] = vo.getCiRuc();
-                fila[2] = vo.getNombre();
-                fila[3] = vo.getApellido();
-                fila[4] = vo.getFechaNac();
-                fila[5] = vo.getSexo();
-                fila[6] = vo.getEstadoCivil();
-                fila[7] = vo.getCodPais();
-                fila[8] = vo.getCodDepartamento();
-                fila[9] = vo.getCodCiudad();
-                fila[10] = vo.getCodBarrio();
-                fila[11] = vo.getCodSucursal();
-                fila[12] = vo.getCodProfesion();
-                fila[13] = vo.getCasaNro();
-                fila[14] = vo.getTelefono();
-                fila[15] = vo.getEmail();
-                fila[16] = vo.getReferencia();
+                fila[0] = vo.getRuc_ci();
+                fila[1] = vo.getNombre();
+                fila[2] = vo.getApellido();
+                fila[3] = vo.getFechaNac();
+                fila[4] = vo.getSexo();
+                fila[5] = vo.getEstadoCivil();
+                fila[6] = vo.getTelefono();
+                fila[7] = vo.getCodSucursal();
+                fila[8] = vo.getCodProfesion();
+                fila[9] = vo.getEmail();
+                fila[10] = vo.getCodPais();
+                fila[11] = vo.getCodDepartamento();
+                fila[12] = vo.getCodCiudad();
+                fila[13] = vo.getCodBarrio();
+                fila[14] = vo.getNroCasa();
+                fila[15] = vo.getCodCobrador();
+                fila[16] = vo.getCodVendedor();
+                fila[17] = vo.getLimiteCredito();
+                fila[18] = vo.getObs();
                 int año, mes, dia;
-                String fechaIngreso = (String) fila[0];
-                String[] partes = fechaIngreso.split("-");
-                año = Integer.parseInt(partes[0]);
-                mes = Integer.parseInt(partes[1]);
-                dia = Integer.parseInt(partes[2]);
-//                jdcfechaingreso.setDate(new Date(año - 1900, mes - 1, dia));
-                txtrucci.setText((String) fila[1]);
-                txtnombre.setText((String) fila[2]);
-                txtapellido.setText((String) fila[3]);
-                String Fechanac = ((String) fila[4]);
+
+                txtrucci.setText((String) fila[0]);
+                txtnombre.setText((String) fila[1]);
+                txtapellido.setText((String) fila[2]);
+                String Fechanac = ((String) fila[3]);
                 String[] partes2 = Fechanac.split("-");
                 año = Integer.parseInt(partes2[0]);
                 mes = Integer.parseInt(partes2[1]);
                 dia = Integer.parseInt(partes2[2]);
                 jdcfechanac.setDate(new Date(año - 1900, mes - 1, dia));
-                String sexo = (String) fila[5];
+                String sexo = (String) fila[4];
                 if (sexo.equals("F")) {
                     jrbfemenino.setSelected(true);
                 } else if (sexo.equals("M")) {
                     jrbmasculino.setSelected(true);
                 }
-                String ec = (String) fila[6];
+                String ec = (String) fila[5];
                 switch (ec) {
                     case "S":
                         jrdsoltero.setSelected(true);
@@ -318,16 +298,19 @@ public class clienteForm extends javax.swing.JFrame {
                     default:
                         break;
                 }
-                txtpais.setText((String) fila[7]);
-                txtdpto.setText((String) fila[8]);
-                txtciudad.setText((String) fila[9]);
-                txtbarrio.setText((String) fila[10]);
-                txtsucursal.setText((String) fila[11]);
-                txtprofesion.setText((String) fila[12]);
-                txtcasa.setText((String) fila[13]);
-                txttelefono.setText((String) fila[14]);
-                txtemail.setText((String) fila[15]);
-                txtreferencia.setText((String) fila[16]);
+                txttelefono.setText((String) fila[6]);
+                txtsucursal.setText((String) fila[7]);
+                txtprofesion.setText((String) fila[8]);
+                txtemail.setText((String) fila[9]);
+                txtpais.setText((String) fila[10]);
+                txtdpto.setText((String) fila[11]);
+                txtciudad.setText((String) fila[12]);
+                txtbarrio.setText((String) fila[13]);
+                txtcasa.setText((String) fila[14]);
+                txtcobrador.setText((String) fila[15]);
+                txtvendedor.setText((String) fila[16]);
+                txtlimiteCredito.setText(df.format(fila[17]));
+                txtreferencia.setText((String) fila[18]);
 
                 lblaction.setText("Update");
                 listarpais(txtpais.getText());
@@ -353,7 +336,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (txtcodigo.getText().length() > 0) {
             String codigo = txtcodigo.getText();
             vo.setCodigo(codigo);
-            dao.Eliminar_PersonalVO(vo);
+            dao.Eliminar_ClienteVO(vo);
             cambiar_form();
         } else {
             JOptionPane.showMessageDialog(null, "Nada que eliminar");
@@ -382,13 +365,11 @@ public class clienteForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = dvo.getDepartamento();
                 txtnombredpto.setText((String) fila[0]);
-                txtciudad.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
             txtnombredpto.setText("");
             txtdpto.setText("");
-            txtdpto.requestFocus();
         }
     }
 
@@ -404,13 +385,11 @@ public class clienteForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = cvo.getCiudad();
                 txtnombreciudad.setText((String) fila[0]);
-                txtbarrio.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
             txtnombreciudad.setText("");
             txtciudad.setText("");
-            txtciudad.requestFocus();
         }
     }
 
@@ -426,7 +405,6 @@ public class clienteForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = bvo.getBarrio();
                 txtnombrebarrio.setText((String) fila[0]);
-                txtsucursal.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
@@ -448,13 +426,11 @@ public class clienteForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = svo.getSucursal();
                 txtnombresucursal.setText((String) fila[0]);
-                txtprofesion.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
             txtnombresucursal.setText("");
             txtsucursal.setText("");
-            txtsucursal.requestFocus();
         }
     }
 
@@ -470,13 +446,11 @@ public class clienteForm extends javax.swing.JFrame {
                 //almacenamos valores en el vector fila
                 fila[0] = provo.getProfesion();
                 txtnombreprofesion.setText((String) fila[0]);
-                txtcasa.requestFocus();
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
             txtnombreprofesion.setText("");
             txtprofesion.setText("");
-            txtprofesion.requestFocus();
         }
     }
 
@@ -487,18 +461,17 @@ public class clienteForm extends javax.swing.JFrame {
         ArrayList<PaisVO> list = pdao.Listar_PaisVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                Object fila[] = new Object[1];
+                Object fila[] = new Object [1];
                 pvo = list.get(i);
                 //almacenamos valores en el vector fila
                 fila[0] = pvo.getPais();
                 txtnombrepais.setText((String) fila[0]);
-                txtdpto.requestFocus();
+
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo válido");
             txtnombrepais.setText("");
             txtpais.setText("");
-            txtpais.requestFocus();
         }
 
     }
@@ -572,12 +545,12 @@ public class clienteForm extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         txtreferencia = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        txtprofesion1 = new javax.swing.JTextField();
-        txtnombreprofesion1 = new javax.swing.JTextField();
-        txtprofesion2 = new javax.swing.JTextField();
-        txtnombreprofesion2 = new javax.swing.JTextField();
+        txtvendedor = new javax.swing.JTextField();
+        txtnomvendedor = new javax.swing.JTextField();
+        txtcobrador = new javax.swing.JTextField();
+        txtnomcobrador = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        txtprofesion3 = new javax.swing.JTextField();
+        txtlimiteCredito = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -793,13 +766,13 @@ public class clienteForm extends javax.swing.JFrame {
 
         jLabel10.setText("Pais :");
 
-        txtnombrepais.setEditable(false);
-        txtnombrepais.setBackground(new java.awt.Color(250, 250, 250));
         txtnombrepais.setToolTipText("");
+        txtnombrepais.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombrepais.setEnabled(false);
 
-        txtnombredpto.setEditable(false);
-        txtnombredpto.setBackground(new java.awt.Color(250, 250, 250));
         txtnombredpto.setToolTipText("");
+        txtnombredpto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombredpto.setEnabled(false);
 
         txtdpto.setToolTipText("");
         txtdpto.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -815,9 +788,9 @@ public class clienteForm extends javax.swing.JFrame {
 
         jLabel12.setText("Ciudad :");
 
-        txtnombreciudad.setEditable(false);
-        txtnombreciudad.setBackground(new java.awt.Color(250, 250, 250));
         txtnombreciudad.setToolTipText("");
+        txtnombreciudad.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombreciudad.setEnabled(false);
 
         txtciudad.setToolTipText("");
         txtciudad.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -826,9 +799,9 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
-        txtnombrebarrio.setEditable(false);
-        txtnombrebarrio.setBackground(new java.awt.Color(250, 250, 250));
         txtnombrebarrio.setToolTipText("");
+        txtnombrebarrio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombrebarrio.setEnabled(false);
 
         txtbarrio.setToolTipText("");
         txtbarrio.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -853,9 +826,9 @@ public class clienteForm extends javax.swing.JFrame {
 
         jLabel14.setText("Sucursal :");
 
-        txtnombresucursal.setEditable(false);
-        txtnombresucursal.setBackground(new java.awt.Color(250, 250, 250));
         txtnombresucursal.setToolTipText("");
+        txtnombresucursal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombresucursal.setEnabled(false);
 
         jLabel15.setText("Profesión :");
 
@@ -866,9 +839,9 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
-        txtnombreprofesion.setEditable(false);
-        txtnombreprofesion.setBackground(new java.awt.Color(250, 250, 250));
         txtnombreprofesion.setToolTipText("");
+        txtnombreprofesion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnombreprofesion.setEnabled(false);
 
         txtcasa.setToolTipText("");
         txtcasa.addActionListener(new java.awt.event.ActionListener() {
@@ -913,34 +886,50 @@ public class clienteForm extends javax.swing.JFrame {
 
         jLabel20.setText("Vendedor :");
 
-        txtprofesion1.setToolTipText("");
-        txtprofesion1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtvendedor.setToolTipText("");
+        txtvendedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtprofesion1KeyPressed(evt);
+                txtvendedorKeyPressed(evt);
             }
         });
 
-        txtnombreprofesion1.setEditable(false);
-        txtnombreprofesion1.setBackground(new java.awt.Color(250, 250, 250));
-        txtnombreprofesion1.setToolTipText("");
+        txtnomvendedor.setToolTipText("");
+        txtnomvendedor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnomvendedor.setEnabled(false);
 
-        txtprofesion2.setToolTipText("");
-        txtprofesion2.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtcobrador.setToolTipText("");
+        txtcobrador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtcobradorFocusLost(evt);
+            }
+        });
+        txtcobrador.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtprofesion2KeyPressed(evt);
+                txtcobradorKeyPressed(evt);
             }
         });
 
-        txtnombreprofesion2.setEditable(false);
-        txtnombreprofesion2.setBackground(new java.awt.Color(250, 250, 250));
-        txtnombreprofesion2.setToolTipText("");
+        txtnomcobrador.setToolTipText("");
+        txtnomcobrador.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtnomcobrador.setEnabled(false);
+        txtnomcobrador.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtnomcobradorFocusLost(evt);
+            }
+        });
 
         jLabel21.setText("Cobrador :");
 
-        txtprofesion3.setToolTipText("");
-        txtprofesion3.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtlimiteCredito.setToolTipText("");
+        txtlimiteCredito.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtprofesion3KeyPressed(evt);
+                txtlimiteCreditoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtlimiteCreditoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtlimiteCreditoKeyTyped(evt);
             }
         });
 
@@ -1030,19 +1019,19 @@ public class clienteForm extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtnombrepais, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtprofesion1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtvendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtnombreprofesion1))
+                            .addComponent(txtnomvendedor))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtprofesion2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtcobrador, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtnombreprofesion2)))
+                            .addComponent(txtnomcobrador)))
                     .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtcasa, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtemail, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtprofesion3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtlimiteCredito, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txttelefono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -1112,17 +1101,17 @@ public class clienteForm extends javax.swing.JFrame {
                     .addComponent(jLabel15))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtprofesion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnombreprofesion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtvendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnomvendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtprofesion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnombreprofesion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcobrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnomcobrador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtprofesion3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtlimiteCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1241,7 +1230,7 @@ public class clienteForm extends javax.swing.JFrame {
                     }
             }
             vaciar();
-            obtener_codigo();
+            txtcodigo.setText(cod());
         }
     }//GEN-LAST:event_b_guardarynuevoActionPerformed
 
@@ -1256,8 +1245,7 @@ public class clienteForm extends javax.swing.JFrame {
     }//GEN-LAST:event_b_cancelarActionPerformed
 
     private void txtcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcodigoActionPerformed
-        // TODO add your handling code here:
-//        jdcfechaingreso.transferFocus();
+
     }//GEN-LAST:event_txtcodigoActionPerformed
 
     private void txtcodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcodigoKeyReleased
@@ -1547,17 +1535,60 @@ public class clienteForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jdcfechanacKeyPressed
 
-    private void txtprofesion1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprofesion1KeyPressed
+    private void txtvendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvendedorKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtprofesion1KeyPressed
+    }//GEN-LAST:event_txtvendedorKeyPressed
 
-    private void txtprofesion2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprofesion2KeyPressed
+    private void txtcobradorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcobradorKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtprofesion2KeyPressed
+    }//GEN-LAST:event_txtcobradorKeyPressed
 
-    private void txtprofesion3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprofesion3KeyPressed
+    private void txtlimiteCreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlimiteCreditoKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtprofesion3KeyPressed
+    }//GEN-LAST:event_txtlimiteCreditoKeyPressed
+
+    private void txtlimiteCreditoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlimiteCreditoKeyReleased
+        // TODO add your handling code here:
+         DecimalFormat df = new DecimalFormat("#,###");
+        try {
+            String texto = txtlimiteCredito.getText();
+            if (texto.length() >= 1) {
+
+                txtlimiteCredito.setText(df.format(Integer.valueOf(texto.replace(".", "").replace(",", ""))));
+
+            }
+        } catch (NumberFormatException e) {
+            e.getMessage();
+        }
+    }//GEN-LAST:event_txtlimiteCreditoKeyReleased
+
+    private void txtlimiteCreditoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlimiteCreditoKeyTyped
+        // TODO add your handling code here:
+        char[] p = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'};
+        int b = 0;
+        for (int i = 0; i <= 10; i++) {
+            if (p[i] == evt.getKeyChar()) {
+                b = 1;
+            }
+
+        }
+        if (b == 0) {
+            evt.consume();
+         getToolkit().beep();
+        }
+
+    }//GEN-LAST:event_txtlimiteCreditoKeyTyped
+
+    private void txtnomcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomcobradorFocusLost
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_txtnomcobradorFocusLost
+
+    private void txtcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcobradorFocusLost
+        // TODO add your handling code here:
+         Cargo_salarioDAO data = new Cargo_salarioDAO();
+        data.listar_cobrador(txtcobrador.getText());
+    }//GEN-LAST:event_txtcobradorFocusLost
 
     /**
      * @param args the command line arguments
@@ -1643,28 +1674,30 @@ public class clienteForm extends javax.swing.JFrame {
     public static javax.swing.JTextField txtbarrio;
     private javax.swing.JTextField txtcasa;
     public static javax.swing.JTextField txtciudad;
+    public static javax.swing.JTextField txtcobrador;
     public static javax.swing.JTextField txtcodigo;
     public static javax.swing.JTextField txtdpto;
     private javax.swing.JTextField txtemail;
+    public static javax.swing.JTextField txtlimiteCredito;
     private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtnombrebarrio;
     private javax.swing.JTextField txtnombreciudad;
     private javax.swing.JTextField txtnombredpto;
     private javax.swing.JTextField txtnombrepais;
     private javax.swing.JTextField txtnombreprofesion;
-    private javax.swing.JTextField txtnombreprofesion1;
-    private javax.swing.JTextField txtnombreprofesion2;
     private javax.swing.JTextField txtnombresucursal;
+    public static javax.swing.JTextField txtnomcobrador;
+    public static javax.swing.JTextField txtnomvendedor;
     public static javax.swing.JTextField txtpais;
     public static javax.swing.JTextField txtprofesion;
-    public static javax.swing.JTextField txtprofesion1;
-    public static javax.swing.JTextField txtprofesion2;
-    public static javax.swing.JTextField txtprofesion3;
     private javax.swing.JTextField txtreferencia;
     private javax.swing.JTextField txtrucci;
     public static javax.swing.JTextField txtsucursal;
     private javax.swing.JTextField txttelefono;
+    public static javax.swing.JTextField txtvendedor;
     // End of variables declaration//GEN-END:variables
 
     //varibales para enviar datos   
+    
+    
 }

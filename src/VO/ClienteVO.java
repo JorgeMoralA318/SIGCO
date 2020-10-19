@@ -10,6 +10,7 @@ public class ClienteVO {
     String fechaNac;
     String fechaIng;
     Object sexo;
+    Object estadoCivil;
     String telefono;
     String codSucursal;
     String codProfesion;
@@ -22,7 +23,8 @@ public class ClienteVO {
     String codCobrador;
     String codVendedor;
     Object limiteCredito;
-    Object estado;
+    int isdeuda;
+    int isSolicitud;
     Object obs;
 
 public ClienteVO(){}
@@ -48,6 +50,9 @@ public ClienteVO(){}
     }
     public Object getSexo(){
         return sexo;
+    }
+    public Object getEstadoCivil(){
+        return estadoCivil;
     }
     public String getTelefono(){
         return telefono;
@@ -85,8 +90,11 @@ public ClienteVO(){}
     public Object getLimiteCredito(){
         return limiteCredito;
     }
-    public Object getEstado(){
-        return estado;
+    public int getIsdeuda(){
+        return isdeuda;
+    }
+    public int getIsSolicitud(){
+        return isSolicitud;
     }
     public Object getObs(){
         return obs;
@@ -114,6 +122,9 @@ public ClienteVO(){}
     }
     public void setSexo(Object sexo){
         this.sexo = sexo;
+    }
+    public void setEstadoCivil(Object estadoCivil){
+        this.estadoCivil = estadoCivil;
     }
     public void setTelefono(String telefono){
         this.telefono = telefono;
@@ -151,8 +162,11 @@ public ClienteVO(){}
     public void setLimiteCredito(Object limiteCredito){
         this.limiteCredito = limiteCredito;
     }
-    public void setEstado(Object estado){
-        this.estado = estado;
+    public void setIsdeuda(int isdeuda){
+        this.isdeuda = isdeuda;
+    }
+    public void setIsSolicitud(int isSolicitud){
+        this.isSolicitud = isSolicitud;
     }
     public void setObs(Object obs){
         this.obs = obs;

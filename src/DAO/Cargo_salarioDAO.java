@@ -2,6 +2,7 @@ package DAO;
 
 import Conexion.Conectar;
 import VO.Cargo_salarioVO;
+import Vista.clienteForm;
 import ds.desktop.notify.DesktopNotify;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 
 
 public class Cargo_salarioDAO{
+    clienteForm ventana;
     
     //metodo para obtener codigo por defecto
     public String obtener_id() {
@@ -161,6 +163,38 @@ public class Cargo_salarioDAO{
                 conec.desconectar();
             }catch(SQLException ex){}
         }
+    }
+    
+    
+    public void listar_cobrador(String codigo) {
+        Conectar conec = new Conectar();
+        ventana = new clienteForm();
+        PreparedStatement ps = null;
+        String sql = "SELECT a.codigo,CONCAT(b.nombre,\" \",b.apellido) AS nombre\n" +
+"FROM cargo_salario a\n" +
+"INNER JOIN personal b ON a.codPersonal = b.codigo WHERE a.codigo=?";
+
+        try {
+            ps = conec.getConnection().prepareStatement(sql);
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String cod = rs.getString(1);
+                String nombre = rs.getString(2);
+
+
+                //crea un vector donde  está la informacion (se crea una fila)
+                String[] resultado = {nombre};
+  
+                ventana.txtnomcobrador.setText(resultado[0]);
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+
     }
 
 
