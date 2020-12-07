@@ -23,6 +23,7 @@ public class paisVista extends javax.swing.JFrame {
     tablaPais tab = new tablaPais();
     paisForm form = new paisForm();
     personalForm pais;
+    clienteForm cliente;
 
     /**
      * Creates new form departamentoVista
@@ -78,21 +79,14 @@ public class paisVista extends javax.swing.JFrame {
 
         lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
     }
-    
-    
-    
-    void cambiarform(){
+
+    void cambiarform() {
         form.setResizable(false);
         form.setTitle("Mantenimiento Pais");
         form.setLocationRelativeTo(null);
         form.setVisible(true);
         this.dispose();
     }
-    
-    
-
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -327,16 +321,19 @@ public class paisVista extends javax.swing.JFrame {
                 String control = lblejecucion.getText();
                 switch (control) {
                     case "":
-                       cambiarform();
-                       form.txtcodigo.setText(codigo);
+                        cambiarform();
+                        form.txtcodigo.setText(codigo);
                         break;
-                     case "con_per":
-                       pais.txtpais.setText(codigo);
+                    case "con_per":
+                        pais.txtpais.setText(codigo);
+                        break;
+                    case "cliente":
+                        cliente.txtpais.setText(codigo);
                         break;
 
                 }
-
                 this.dispose();
+
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtbuscar.requestFocus();
@@ -350,7 +347,7 @@ public class paisVista extends javax.swing.JFrame {
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         // TODO add your handling code here:
-       cambiarform();
+        cambiarform();
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
@@ -365,7 +362,6 @@ public class paisVista extends javax.swing.JFrame {
 
             cambiarform();
             form.txtcodigo.setText(codigo);
-
 
         }
     }//GEN-LAST:event_b_modificarActionPerformed
@@ -386,8 +382,8 @@ public class paisVista extends javax.swing.JFrame {
 
     private void m_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_updateActionPerformed
         // TODO add your handling code here:
-  cambiarform();
-       
+        cambiarform();
+
     }//GEN-LAST:event_m_updateActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

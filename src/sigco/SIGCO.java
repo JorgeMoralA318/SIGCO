@@ -20,14 +20,16 @@ public class SIGCO {
     public static void main(String[] args) {
         // TODO code application logic here
 
-
             Principal f = new Principal();
             f.setTitle("Menu Principal  - Prueba Unitaria");
             f.setLocationRelativeTo(null);
             f.setExtendedState(Frame.MAXIMIZED_BOTH);
             f.setResizable(false);
+            f.b_perfil.setVisible(false);
+            f.b_cerrar.setVisible(false);
             f.setVisible(true);
-
+            f.JMenuBar.setVisible(false);
+            
 
     }
 

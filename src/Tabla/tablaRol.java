@@ -2,7 +2,7 @@
 package Tabla;
 
 import Conexion.Conectar;
-import Vista.nivelVista;
+import Vista.rolVista;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +10,12 @@ import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class tablaNivel {
+public class tablaRol {
 
-    nivelVista vista;
+    rolVista vista;
     DefaultTableModel modelo;
     PreparedStatement ps = null;
-    String[] titulosColumnas = {"Código","Nivel"};
+    String[] titulosColumnas = {"Código","Rol"};
     //matriz donde se almacena los datos de cada celda de la tabla
     String info[][] = {};
     private final boolean[] editable = {false, false};
@@ -29,7 +29,7 @@ public class tablaNivel {
     }
 
 //controlador de la tabla, opcionalmente se puede colocar dentro del formulario o en una nueva clase
-    public void mostrar(String buscar) {
+    public void mostrar(String buscar, String parametro) {
 
         modelo = new DefaultTableModel(info, titulosColumnas) {
             @Override
@@ -41,16 +41,16 @@ public class tablaNivel {
         vista.tabla.setModel(modelo);
         ancho_columnas();
         //ejecuta una consulta a la BD
-        buscar(buscar);
+        buscar(buscar,parametro);
     }
 
-    public void buscar(String buscar) {
+    public void buscar(String buscar, String parametro) {
         Conectar conec = new Conectar();
         String simbolo = "###,###.##";
         DecimalFormat df = new DecimalFormat(simbolo);
             
 
-        String sql = "select * from nivel where nivel like ?";
+        String sql = "select * from rol WHERE "+ parametro +" LIKE ?";
 
         try {
             ps = conec.getConnection().prepareStatement(sql);
@@ -59,10 +59,10 @@ public class tablaNivel {
 
             while (rs.next()) {
                 String codigo = rs.getString(1);
-                String nivel = rs.getString(2);
+                String rol = rs.getString(2);
 
                 //crea un vector donde  está la informacion (se crea una fila)
-                Object[] datos = {codigo,nivel};
+                Object[] datos = {codigo,rol};
                 //al modelo de la tabla le agrega una fila
                 //con los datos que están en datos
                 modelo.addRow(datos);

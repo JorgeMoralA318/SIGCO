@@ -2,6 +2,7 @@ package DAO;
 
 import Conexion.Conectar;
 import VO.ClienteVO;
+import Vista.obtenerCodigo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class ClienteDAO{
         ResultSet rs;
         String id = "";
         String sql = "SELECT IF(COUNT(*) IS NULL,'1',COUNT(*) +1) AS codigo FROM cliente; ";
+        obtenerCodigo obcodigo = new obtenerCodigo();
         try {
             cn = new Conectar();
             con = cn.getConnection();
@@ -26,6 +28,8 @@ public class ClienteDAO{
             rs = ps.executeQuery();
             while (rs.next()) {
                 id = rs.getString(1);
+                id = obcodigo.codigoDefecto(id, id.length());
+                
             }
         } catch ( SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -167,9 +171,9 @@ public class ClienteDAO{
                 aviso.actualizar();
             }
         }catch(SQLException ex){
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }catch(Exception ex){
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,ex.getMessage());
         }finally{
             try{
                 ps.close();

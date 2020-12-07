@@ -104,7 +104,6 @@ public class ciudadForm extends javax.swing.JFrame {
         String va = lblejecucion.getText();
         ciudadVista v = new ciudadVista();
         v.setResizable(false);
-        v.setLocationRelativeTo(null);
         v.setTitle("Ciudad");
         v.lblejecucion.setText(va);
         v.setVisible(true);

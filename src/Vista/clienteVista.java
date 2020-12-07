@@ -11,16 +11,16 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import static sigco.Principal.panelPrincipal;
 
 /**
  *
  * @author Helena
  */
-public class clienteVista extends javax.swing.JFrame {
+public class clienteVista extends javax.swing.JInternalFrame {
 
     tablaCliente tab = new tablaCliente();
-    clienteForm form = new clienteForm();
-    mostrarFecha fecha = new mostrarFecha();
+     clienteForm form = new clienteForm();
 
     /**
      * Creates new form departamentoVista
@@ -29,7 +29,7 @@ public class clienteVista extends javax.swing.JFrame {
         initComponents();
         txtbuscar.selectAll();
         mostrar("", buscarParametro());
-        lblfecha.setText(fecha.mostrarFecha());
+        lblfecha.setText(mostrarFecha.mostrarFecha());
     }
 
     private void mostrar(String buscar, String parametro) {
@@ -43,10 +43,8 @@ public class clienteVista extends javax.swing.JFrame {
     }
 
     void cambiarform() {
-        form.setResizable(false);
-        form.setTitle("Mantenimiento Cliente");
-        form.setLocationRelativeTo(null);
-        form.setVisible(true);
+       
+        llamarJInternalFrame.llamarFormulario(form, panelPrincipal, "Mantenimiento Cliente", false);
         this.dispose();
     }
 
@@ -95,6 +93,7 @@ public class clienteVista extends javax.swing.JFrame {
         checkruc = new javax.swing.JCheckBox();
         checknombre = new javax.swing.JCheckBox();
         checkapellido = new javax.swing.JCheckBox();
+        b_nuevo1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         m_update = new javax.swing.JMenuItem();
@@ -104,9 +103,7 @@ public class clienteVista extends javax.swing.JFrame {
         jButton3.setText("Nuevo");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(248, 249, 249));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,7 +126,7 @@ public class clienteVista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        jToolBar1.setBackground(java.awt.SystemColor.inactiveCaption);
+        jToolBar1.setBackground(new java.awt.Color(255, 102, 0));
         jToolBar1.setRollover(true);
 
         lblfecha.setText("jLabel1");
@@ -199,7 +196,7 @@ public class clienteVista extends javax.swing.JFrame {
 
         jLabel2.setText("Filtros:");
 
-        checkcodigo.setBackground(new java.awt.Color(248, 249, 249));
+        checkcodigo.setBackground(new java.awt.Color(255, 255, 255));
         grupo.add(checkcodigo);
         checkcodigo.setText("Código");
         checkcodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -209,7 +206,7 @@ public class clienteVista extends javax.swing.JFrame {
             }
         });
 
-        checkruc.setBackground(new java.awt.Color(248, 249, 249));
+        checkruc.setBackground(new java.awt.Color(255, 255, 255));
         grupo.add(checkruc);
         checkruc.setText("CI-RUC");
         checkruc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,7 +216,7 @@ public class clienteVista extends javax.swing.JFrame {
             }
         });
 
-        checknombre.setBackground(new java.awt.Color(248, 249, 249));
+        checknombre.setBackground(new java.awt.Color(255, 255, 255));
         grupo.add(checknombre);
         checknombre.setSelected(true);
         checknombre.setText("Nombre");
@@ -230,13 +227,25 @@ public class clienteVista extends javax.swing.JFrame {
             }
         });
 
-        checkapellido.setBackground(new java.awt.Color(248, 249, 249));
+        checkapellido.setBackground(new java.awt.Color(255, 255, 255));
         grupo.add(checkapellido);
         checkapellido.setText("Apellido");
         checkapellido.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         checkapellido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 checkapellidoMouseClicked(evt);
+            }
+        });
+
+        b_nuevo1.setBackground(new java.awt.Color(0, 153, 153));
+        b_nuevo1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_nuevo1.setForeground(new java.awt.Color(255, 255, 255));
+        b_nuevo1.setText("Referencia");
+        b_nuevo1.setBorderPainted(false);
+        b_nuevo1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        b_nuevo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_nuevo1ActionPerformed(evt);
             }
         });
 
@@ -250,11 +259,13 @@ public class clienteVista extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b_nuevo)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b_modificar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(b_nuevo1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(b_salir))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +299,8 @@ public class clienteVista extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_nuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -465,6 +477,28 @@ public class clienteVista extends javax.swing.JFrame {
         txtbuscar.selectAll();
     }//GEN-LAST:event_checkapellidoMouseClicked
 
+    private void b_nuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevo1ActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = this.tabla.getSelectedRow();
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "Debes seleccionar un Cliente");
+
+            } else {
+                DefaultTableModel modelo = (DefaultTableModel) this.tabla.getModel();
+                String codigo = modelo.getValueAt(filaSeleccionada, 0).toString();
+                String Nombre = modelo.getValueAt(filaSeleccionada, 2).toString();
+                referenciaCliente rf = new referenciaCliente();
+                rf.setTitle("Referencia Cliente");
+                rf.setResizable(false);
+                rf.setLocationRelativeTo(null);
+                rf.setVisible(true);
+                rf.txtCliente.setText(codigo);
+                rf.txtNomCliente.setText(Nombre);
+                rf.mostrar(codigo);
+                this.dispose();
+            }
+    }//GEN-LAST:event_b_nuevo1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -505,6 +539,7 @@ public class clienteVista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
+    private javax.swing.JButton b_nuevo1;
     private javax.swing.JButton b_salir;
     private javax.swing.JCheckBox checkapellido;
     private javax.swing.JCheckBox checkcodigo;

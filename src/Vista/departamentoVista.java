@@ -28,6 +28,7 @@ public class departamentoVista extends javax.swing.JFrame {
     DepartamentoVO vo;
     ciudadForm c;
     personalForm perDpto;
+    clienteForm cliente;
 
     /**
      * Creates new form departamentoVista
@@ -330,6 +331,9 @@ public class departamentoVista extends javax.swing.JFrame {
                         break;
                     case "con_per":
                         perDpto.txtdpto.setText(codigo);
+                        break;
+                    case "cliente":
+                        cliente.txtdpto.setText(codigo);
                         break;
 
                 }

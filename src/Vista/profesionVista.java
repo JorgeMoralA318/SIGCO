@@ -23,6 +23,7 @@ public class profesionVista extends javax.swing.JFrame {
     tablaProfesion tab = new tablaProfesion();
     profesionForm form = new profesionForm();
     personalForm perPro;
+    clienteForm cliente;
 
     /**
      * Creates new form departamentoVista
@@ -333,6 +334,9 @@ public class profesionVista extends javax.swing.JFrame {
                         break;
                     case "con_per":
                        perPro.txtprofesion.setText(codigo);
+                        break;
+                        case "cliente":
+                       cliente.txtprofesion.setText(codigo);
                         break;
                 }
 

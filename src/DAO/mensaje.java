@@ -19,15 +19,15 @@ public class mensaje {
     String titulo = "Sigco";
 
     public void guardar() {
-        JOptionPane.showMessageDialog(null, this.add, this.titulo, 2);
+        JOptionPane.showMessageDialog(null, this.add, this.titulo,1);
     }
 
     public void actualizar() {
-        JOptionPane.showMessageDialog(null, this.update, this.titulo, 2);
+        JOptionPane.showMessageDialog(null, this.update, this.titulo, 1);
     }
 
     public void eliminar() {
-        JOptionPane.showMessageDialog(null, this.delete, this.titulo, 2);
+        JOptionPane.showMessageDialog(null, this.delete, this.titulo, 1);
     }
 
 }

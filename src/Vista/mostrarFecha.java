@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class mostrarFecha {
     
     
-    public String mostrarFecha(){
+    public static String mostrarFecha(){
         String fecha ;
         //mostrar fecha del sistema
         LocalDate date = LocalDate.now();

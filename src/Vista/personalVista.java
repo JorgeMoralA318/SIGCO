@@ -23,6 +23,7 @@ public class personalVista extends javax.swing.JFrame {
     tablaPersonal tab = new tablaPersonal();
     personalForm form = new personalForm();
     cargoPersonalForm pform;
+    usuarioForm usuf;
 
     /**
      * Creates new form departamentoVista
@@ -333,6 +334,9 @@ public class personalVista extends javax.swing.JFrame {
                         break;
                      case "cargo_salario":
                        pform.txtpersonal.setText(codigo);
+                        break;
+                      case "d_usuario":
+                       usuf.txtEmpleado.setText(codigo);
                         break;
 
                 }

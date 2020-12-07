@@ -21,6 +21,7 @@ public class cargoPersonalVista extends javax.swing.JFrame {
     tablaCargoPersonal tab = new tablaCargoPersonal();
     cargoPersonalForm form = new cargoPersonalForm();
     mostrarFecha fecha = new mostrarFecha();
+    clienteForm cliente;
 
     /**
      * Creates new form departamentoVista
@@ -41,22 +42,15 @@ public class cargoPersonalVista extends javax.swing.JFrame {
         txtbuscar.requestFocus();
     }
 
-    
-    
-    
-    
-    void cambiarform(){
+    void cambiarform() {
         form.setResizable(false);
         form.setTitle("Mantenimiento Cargo Salario");
+        String bandera =lblejecucion.getText();
+        form.lblejecucion.setText(bandera);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
         this.dispose();
     }
-    
-    
-
-    
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,7 +76,6 @@ public class cargoPersonalVista extends javax.swing.JFrame {
         b_nuevo = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
         b_salir = new javax.swing.JButton();
-        b_elegir = new javax.swing.JButton();
         txtbuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -136,8 +129,11 @@ public class cargoPersonalVista extends javax.swing.JFrame {
         jToolBar1.add(lblejecucion);
         lblejecucion.getAccessibleContext().setAccessibleName("lblejecucion");
 
-        b_nuevo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        b_nuevo.setBackground(new java.awt.Color(0, 102, 102));
+        b_nuevo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_nuevo.setForeground(new java.awt.Color(255, 255, 255));
         b_nuevo.setText("Nuevo");
+        b_nuevo.setBorderPainted(false);
         b_nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,8 +141,11 @@ public class cargoPersonalVista extends javax.swing.JFrame {
             }
         });
 
-        b_modificar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        b_modificar.setBackground(new java.awt.Color(0, 102, 102));
+        b_modificar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_modificar.setForeground(new java.awt.Color(255, 255, 255));
         b_modificar.setText("Modificar");
+        b_modificar.setBorderPainted(false);
         b_modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,17 +153,17 @@ public class cargoPersonalVista extends javax.swing.JFrame {
             }
         });
 
-        b_salir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        b_salir.setBackground(new java.awt.Color(0, 102, 102));
+        b_salir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_salir.setForeground(new java.awt.Color(255, 255, 255));
         b_salir.setText("Salir");
+        b_salir.setBorderPainted(false);
         b_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_salirActionPerformed(evt);
             }
         });
-
-        b_elegir.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        b_elegir.setText("Elegir");
 
         txtbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -190,9 +189,7 @@ public class cargoPersonalVista extends javax.swing.JFrame {
                         .addComponent(b_nuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_elegir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(b_salir))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,7 +210,6 @@ public class cargoPersonalVista extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_elegir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -296,8 +292,14 @@ public class cargoPersonalVista extends javax.swing.JFrame {
                 String control = lblejecucion.getText();
                 switch (control) {
                     case "":
-                       cambiarform();
-                       form.txtcodigo.setText(codigo);
+                        cambiarform();
+                        form.txtcodigo.setText(codigo);
+                        break;
+                    case "clienteV":
+                        cliente.txtvendedor.setText(codigo);
+                        break;
+                    case "clienteC":
+                        cliente.txtcobrador.setText(codigo);
                         break;
 
                 }
@@ -316,7 +318,7 @@ public class cargoPersonalVista extends javax.swing.JFrame {
 
     private void b_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_nuevoActionPerformed
         // TODO add your handling code here:
-       cambiarform();
+        cambiarform();
     }//GEN-LAST:event_b_nuevoActionPerformed
 
     private void b_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_modificarActionPerformed
@@ -331,7 +333,6 @@ public class cargoPersonalVista extends javax.swing.JFrame {
 
             cambiarform();
             form.txtcodigo.setText(codigo);
-
 
         }
     }//GEN-LAST:event_b_modificarActionPerformed
@@ -352,8 +353,8 @@ public class cargoPersonalVista extends javax.swing.JFrame {
 
     private void m_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_updateActionPerformed
         // TODO add your handling code here:
-  cambiarform();
-       
+        cambiarform();
+
     }//GEN-LAST:event_m_updateActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -386,7 +387,7 @@ public class cargoPersonalVista extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(cargoPersonalVista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-       
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -397,7 +398,6 @@ public class cargoPersonalVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_elegir;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JButton b_salir;

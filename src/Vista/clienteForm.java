@@ -27,16 +27,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import static sigco.Principal.panelPrincipal;
 
 /**
  *
  * @author Helena
  */
-public class clienteForm extends javax.swing.JFrame {
+public class clienteForm extends javax.swing.JInternalFrame {
 
     ClienteVO vo = new ClienteVO();
     ClienteDAO dao = new ClienteDAO();
     mostrarFecha fecha = new mostrarFecha();
+    String bandera = "cliente";
+    obtenerCodigo cod = new obtenerCodigo();
 
     /**
      * Creates new form departamentoVista
@@ -44,23 +47,21 @@ public class clienteForm extends javax.swing.JFrame {
     public clienteForm() {
         initComponents();
         lblfecha.setText(fecha.mostrarFecha());
-        txtcodigo.setText(cod());
-        
-    }
+        obtenerCodigo();
 
- 
+    }
 
     //metodo para capturar y enviar datos
     void guardar() {
-        Calendar cal = jdcfechanac.getCalendar();;
-        String codigo = txtcodigo.getText();
+        Calendar cal = jdcfechanac.getCalendar();
+        String codigo = dao.obtener_id();
         String ruc = txtrucci.getText();
         String nombre = txtnombre.getText();
         String apellido = txtapellido.getText();
         int d = cal.get(Calendar.DAY_OF_MONTH);
         int m = cal.get(Calendar.MONTH);
         int a = cal.get(Calendar.YEAR) - 1900;
-        String fechaNac= (new Date(a, m, d)).toString();
+        String fechaNac = (new Date(a, m, d)).toString();
         String sexo = sexo();
         String estadoCivil = estadoCivil();
         String pais = txtpais.getText();
@@ -76,7 +77,7 @@ public class clienteForm extends javax.swing.JFrame {
         String vendedor = txtvendedor.getText();
         String cobrador = txtcobrador.getText();
         Object limiteCredito = txtlimiteCredito.getText().replace(".", "");;
-        
+
         vo.setCodigo(codigo);
         vo.setRuc_ci(ruc);
         vo.setNombre(nombre);
@@ -110,7 +111,7 @@ public class clienteForm extends javax.swing.JFrame {
         int d = cal.get(Calendar.DAY_OF_MONTH);
         int m = cal.get(Calendar.MONTH);
         int a = cal.get(Calendar.YEAR) - 1900;
-        String fechaNac= (new Date(a, m, d)).toString();
+        String fechaNac = (new Date(a, m, d)).toString();
         String sexo = sexo();
         String estadoCivil = estadoCivil();
         String pais = txtpais.getText();
@@ -156,7 +157,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (jrbmasculino.isSelected()) {
             sex = "M";
         } else if (jrbfemenino.isSelected()) {
-            sex= "F";
+            sex = "F";
         }
         return sex;
     }
@@ -179,10 +180,7 @@ public class clienteForm extends javax.swing.JFrame {
     //metodo paara cerrar formulario actual y abrir principal
     void cambiar_form() {
         clienteVista v = new clienteVista();
-        v.setResizable(false);
-        v.setLocationRelativeTo(null);
-        v.setTitle("Datos Cliente");
-        v.setVisible(true);
+        llamarJInternalFrame.llamarFormulario(v, panelPrincipal, "Datos Cliente Cliente", false);
         this.dispose();
     }
 
@@ -209,32 +207,9 @@ public class clienteForm extends javax.swing.JFrame {
         txtrucci.setText("");
     }
 
-    private String cod() {
-        dao = new ClienteDAO();
-        String resultado;
-        int contador = dao.obtener_id().length();
-        String cero = null;
-        switch (contador) {
-            case 1:
-                cero = "0000";
-                break;
-            case 2:
-                cero = "000";
-                break;
-            case 3:
-                cero = "00";
-                break;
-            case 4:
-                cero = "0";
-                break;
-            case 5:
-                cero = "";
-                break;
-        }
-        resultado = cero + dao.obtener_id();
-        return resultado;
+    final void obtenerCodigo() {
+        txtcodigo.setText(dao.obtener_id());
     }
-
 
     void listarCodigo(String codigo) {
         String simbolo = "###,###.##";
@@ -319,7 +294,8 @@ public class clienteForm extends javax.swing.JFrame {
                 listarbarrio(txtbarrio.getText());
                 listarsucursal(txtsucursal.getText());
                 listarprofesion(txtprofesion.getText());
-                txtrucci.requestFocus();
+                listar_cobrador(txtcobrador.getName());
+                listar_vendedor(txtvendedor.getText());
 
             }
         } else {
@@ -351,7 +327,6 @@ public class clienteForm extends javax.swing.JFrame {
 
         }
     }
-
 
     //Listar Departamento
     void listardpto(String codigo) {
@@ -461,7 +436,7 @@ public class clienteForm extends javax.swing.JFrame {
         ArrayList<PaisVO> list = pdao.Listar_PaisVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                Object fila[] = new Object [1];
+                Object fila[] = new Object[1];
                 pvo = list.get(i);
                 //almacenamos valores en el vector fila
                 fila[0] = pvo.getPais();
@@ -474,6 +449,18 @@ public class clienteForm extends javax.swing.JFrame {
             txtpais.setText("");
         }
 
+    }
+
+    void listar_cobrador(String buscar) {
+        Cargo_salarioDAO data = new Cargo_salarioDAO();
+        String nombre = data.mostrar_nomEmp(txtcobrador.getText());
+        txtnomcobrador.setText(nombre);
+    }
+
+    void listar_vendedor(String buscar) {
+        Cargo_salarioDAO data = new Cargo_salarioDAO();
+        String nombre = data.mostrar_nomEmp(txtvendedor.getText());
+        txtnomvendedor.setText(nombre);
     }
 
     /**
@@ -559,9 +546,9 @@ public class clienteForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(248, 249, 249));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jToolBar1.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.inactiveTitleBackground"));
+        jToolBar1.setBackground(new java.awt.Color(255, 102, 0));
         jToolBar1.setRollover(true);
 
         lblfecha.setText("jLabel1");
@@ -577,8 +564,10 @@ public class clienteForm extends javax.swing.JFrame {
         jToolBar1.add(jSeparator3);
         jToolBar1.add(lblejecucion);
 
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel2.setText("RUC - CI :");
 
+        txtcodigo.setBackground(new java.awt.Color(230, 230, 230));
         txtcodigo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtcodigo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -668,6 +657,7 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        txtrucci.setBackground(new java.awt.Color(230, 230, 230));
         txtrucci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtrucciActionPerformed(evt);
@@ -682,8 +672,10 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel4.setText("Código :");
 
+        txtnombre.setBackground(new java.awt.Color(230, 230, 230));
         txtnombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtnombreActionPerformed(evt);
@@ -698,8 +690,10 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel3.setText("Nombres :");
 
+        txtapellido.setBackground(new java.awt.Color(230, 230, 230));
         txtapellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtapellidoActionPerformed(evt);
@@ -714,39 +708,52 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel6.setText("Apellidos :");
 
+        jdcfechanac.setBackground(new java.awt.Color(230, 230, 230));
         jdcfechanac.setDateFormatString("dd-MM-y");
+        jdcfechanac.setOpaque(false);
         jdcfechanac.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jdcfechanacKeyPressed(evt);
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel7.setText("Fecha de Nac. :");
 
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel8.setText("Sexo :");
 
+        jrbmasculino.setBackground(new java.awt.Color(230, 230, 230));
         groupSexo.add(jrbmasculino);
         jrbmasculino.setText("Masculino");
 
+        jrbfemenino.setBackground(new java.awt.Color(230, 230, 230));
         groupSexo.add(jrbfemenino);
         jrbfemenino.setText("Femenino");
 
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel9.setText("Estado Civil :");
 
+        jrdsoltero.setBackground(new java.awt.Color(230, 230, 230));
         groupEstadoCivil.add(jrdsoltero);
         jrdsoltero.setText("Soltero");
 
+        jrdcasado.setBackground(new java.awt.Color(230, 230, 230));
         groupEstadoCivil.add(jrdcasado);
         jrdcasado.setText("Casado");
 
+        jrdseparado.setBackground(new java.awt.Color(230, 230, 230));
         groupEstadoCivil.add(jrdseparado);
         jrdseparado.setText("Separado");
 
+        jrdviudo.setBackground(new java.awt.Color(230, 230, 230));
         groupEstadoCivil.add(jrdviudo);
         jrdviudo.setText("Viudo");
 
+        txtpais.setBackground(new java.awt.Color(230, 230, 230));
         txtpais.setToolTipText("");
         txtpais.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -764,17 +771,26 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel10.setText("Pais :");
 
+        txtnombrepais.setBackground(new java.awt.Color(230, 230, 230));
         txtnombrepais.setToolTipText("");
         txtnombrepais.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombrepais.setEnabled(false);
 
+        txtnombredpto.setBackground(new java.awt.Color(230, 230, 230));
         txtnombredpto.setToolTipText("");
         txtnombredpto.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombredpto.setEnabled(false);
 
+        txtdpto.setBackground(new java.awt.Color(230, 230, 230));
         txtdpto.setToolTipText("");
+        txtdpto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtdptoFocusLost(evt);
+            }
+        });
         txtdpto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtdptoKeyPressed(evt);
@@ -784,35 +800,58 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel11.setText("Departamento :");
 
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel12.setText("Ciudad :");
 
+        txtnombreciudad.setBackground(new java.awt.Color(230, 230, 230));
         txtnombreciudad.setToolTipText("");
         txtnombreciudad.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombreciudad.setEnabled(false);
 
+        txtciudad.setBackground(new java.awt.Color(230, 230, 230));
         txtciudad.setToolTipText("");
+        txtciudad.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtciudadFocusLost(evt);
+            }
+        });
         txtciudad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtciudadKeyPressed(evt);
             }
         });
 
+        txtnombrebarrio.setBackground(new java.awt.Color(230, 230, 230));
         txtnombrebarrio.setToolTipText("");
         txtnombrebarrio.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombrebarrio.setEnabled(false);
 
+        txtbarrio.setBackground(new java.awt.Color(230, 230, 230));
         txtbarrio.setToolTipText("");
+        txtbarrio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtbarrioFocusLost(evt);
+            }
+        });
         txtbarrio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtbarrioKeyPressed(evt);
             }
         });
 
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel13.setText("Barrio :");
 
+        txtsucursal.setBackground(new java.awt.Color(230, 230, 230));
         txtsucursal.setToolTipText("");
+        txtsucursal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtsucursalFocusLost(evt);
+            }
+        });
         txtsucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtsucursalActionPerformed(evt);
@@ -824,25 +863,36 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel14.setText("Sucursal :");
 
+        txtnombresucursal.setBackground(new java.awt.Color(230, 230, 230));
         txtnombresucursal.setToolTipText("");
         txtnombresucursal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombresucursal.setEnabled(false);
 
+        jLabel15.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel15.setText("Profesión :");
 
+        txtprofesion.setBackground(new java.awt.Color(230, 230, 230));
         txtprofesion.setToolTipText("");
+        txtprofesion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtprofesionFocusLost(evt);
+            }
+        });
         txtprofesion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtprofesionKeyPressed(evt);
             }
         });
 
+        txtnombreprofesion.setBackground(new java.awt.Color(230, 230, 230));
         txtnombreprofesion.setToolTipText("");
         txtnombreprofesion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnombreprofesion.setEnabled(false);
 
+        txtcasa.setBackground(new java.awt.Color(230, 230, 230));
         txtcasa.setToolTipText("");
         txtcasa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -855,8 +905,10 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel16.setText("Casa Número :");
 
+        txttelefono.setBackground(new java.awt.Color(230, 230, 230));
         txttelefono.setToolTipText("");
         txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -864,10 +916,13 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel17.setText("Número de Teléfono :");
 
+        jLabel18.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel18.setText("Correo Electrónico :");
 
+        txtemail.setBackground(new java.awt.Color(230, 230, 230));
         txtemail.setToolTipText("");
         txtemail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -875,8 +930,10 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel19.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel19.setText("Observación :");
 
+        txtreferencia.setBackground(new java.awt.Color(230, 230, 230));
         txtreferencia.setToolTipText("");
         txtreferencia.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -884,19 +941,28 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel20.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel20.setText("Vendedor :");
 
+        txtvendedor.setBackground(new java.awt.Color(230, 230, 230));
         txtvendedor.setToolTipText("");
+        txtvendedor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtvendedorFocusLost(evt);
+            }
+        });
         txtvendedor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtvendedorKeyPressed(evt);
             }
         });
 
+        txtnomvendedor.setBackground(new java.awt.Color(230, 230, 230));
         txtnomvendedor.setToolTipText("");
         txtnomvendedor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnomvendedor.setEnabled(false);
 
+        txtcobrador.setBackground(new java.awt.Color(230, 230, 230));
         txtcobrador.setToolTipText("");
         txtcobrador.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -909,6 +975,7 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        txtnomcobrador.setBackground(new java.awt.Color(230, 230, 230));
         txtnomcobrador.setToolTipText("");
         txtnomcobrador.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtnomcobrador.setEnabled(false);
@@ -918,8 +985,10 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel21.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel21.setText("Cobrador :");
 
+        txtlimiteCredito.setBackground(new java.awt.Color(230, 230, 230));
         txtlimiteCredito.setToolTipText("");
         txtlimiteCredito.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -933,6 +1002,7 @@ public class clienteForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel22.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel22.setText("Limite Crédito :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -970,13 +1040,13 @@ public class clienteForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(b_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(b_guardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_guardarynuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(b_eliminar)
                         .addGap(6, 6, 6)
-                        .addComponent(b_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(b_cancelar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jrdsoltero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1196,18 +1266,34 @@ public class clienteForm extends javax.swing.JFrame {
 
     private void b_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarActionPerformed
         // TODO add your handling code here:
-        if (validar() ) {
+        if (validar()) {
             switch (lblaction.getText()) {
                 case "Add":
                     guardar();
+                    int opcion = JOptionPane.showConfirmDialog(null, "Deseas Registrar Referencia para el Cliente ?", "Mensaje", JOptionPane.YES_NO_OPTION);
+                    if (opcion == 0) {
+                        referenciaCliente rf = new referenciaCliente();
+                        rf.setTitle("Referencia Cliente");
+                        rf.setResizable(false);
+                        rf.setLocationRelativeTo(null);
+                        rf.setVisible(true);
+                        rf.txtCliente.setText(txtcodigo.getText());
+                        String nombre = txtnombre.getText(); String apellido =  " " + txtapellido.getText();
+                        rf.txtNomCliente.setText(nombre + apellido);
+                        rf.mostrar(txtcodigo.getText());
+                        this.dispose();
+                    }else{
+                        cambiar_form();
+                    }
                     break;
 
                 case "Update":
                     actualizar();
+                    cambiar_form();
                     break;
 
             }
-            cambiar_form();
+
         }
 
 
@@ -1230,7 +1316,7 @@ public class clienteForm extends javax.swing.JFrame {
                     }
             }
             vaciar();
-            txtcodigo.setText(cod());
+            obtenerCodigo();
         }
     }//GEN-LAST:event_b_guardarynuevoActionPerformed
 
@@ -1313,7 +1399,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
 //            jdcfechaingreso.transferFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtnombre.requestFocus();
         }
     }//GEN-LAST:event_txtrucciKeyPressed
@@ -1332,7 +1418,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtrucci.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtapellido.requestFocus();
         }
     }//GEN-LAST:event_txtnombreKeyPressed
@@ -1350,7 +1436,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtnombre.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             jdcfechanac.transferFocus();
         }
     }//GEN-LAST:event_txtapellidoKeyPressed
@@ -1370,7 +1456,7 @@ public class clienteForm extends javax.swing.JFrame {
                 sucursalVista dp = new sucursalVista();
                 dp.setResizable(false);
                 dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listarsucursal(txtsucursal.getText());
@@ -1392,7 +1478,7 @@ public class clienteForm extends javax.swing.JFrame {
                 paisVista dp = new paisVista();
                 dp.setResizable(false);
                 dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listarpais(txtpais.getText());
@@ -1414,7 +1500,7 @@ public class clienteForm extends javax.swing.JFrame {
                 departamentoVista dp = new departamentoVista();
                 dp.setResizable(false);
                 dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listardpto(txtdpto.getText());
@@ -1431,8 +1517,7 @@ public class clienteForm extends javax.swing.JFrame {
             if (txtciudad.getText().length() == 0) {
                 ciudadVista dp = new ciudadVista();
                 dp.setResizable(false);
-                dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listarciudad(txtciudad.getText());
@@ -1450,7 +1535,7 @@ public class clienteForm extends javax.swing.JFrame {
                 barrioVista dp = new barrioVista();
                 dp.setResizable(false);
                 dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listarbarrio(txtbarrio.getText());
@@ -1469,7 +1554,7 @@ public class clienteForm extends javax.swing.JFrame {
                 profesionVista dp = new profesionVista();
                 dp.setResizable(false);
                 dp.setLocationRelativeTo(null);
-                dp.lblejecucion.setText("con_per");
+                dp.lblejecucion.setText(bandera);
                 dp.setVisible(true);
             } else {
                 listarprofesion(txtprofesion.getText());
@@ -1496,7 +1581,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtprofesion.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txttelefono.requestFocus();
         }
     }//GEN-LAST:event_txtcasaKeyPressed
@@ -1506,7 +1591,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtcasa.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtemail.requestFocus();
         }
     }//GEN-LAST:event_txttelefonoKeyPressed
@@ -1516,7 +1601,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txttelefono.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtreferencia.requestFocus();
         }
     }//GEN-LAST:event_txtemailKeyPressed
@@ -1526,7 +1611,7 @@ public class clienteForm extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtemail.requestFocus();
 
-        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             b_guardar.requestFocus();
         }
     }//GEN-LAST:event_txtreferenciaKeyPressed
@@ -1537,10 +1622,32 @@ public class clienteForm extends javax.swing.JFrame {
 
     private void txtvendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvendedorKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtvendedor.getText().length() == 0) {
+                cargoPersonalVista dp = new cargoPersonalVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("clienteV");
+                dp.setVisible(true);
+            } else {
+                listar_vendedor(txtvendedor.getText());
+            }
+        }
     }//GEN-LAST:event_txtvendedorKeyPressed
 
     private void txtcobradorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcobradorKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (txtcobrador.getText().length() == 0) {
+                cargoPersonalVista dp = new cargoPersonalVista();
+                dp.setResizable(false);
+                dp.setLocationRelativeTo(null);
+                dp.lblejecucion.setText("clienteC");
+                dp.setVisible(true);
+            } else {
+                listar_vendedor(txtvendedor.getText());
+            }
+        }
     }//GEN-LAST:event_txtcobradorKeyPressed
 
     private void txtlimiteCreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlimiteCreditoKeyPressed
@@ -1549,7 +1656,7 @@ public class clienteForm extends javax.swing.JFrame {
 
     private void txtlimiteCreditoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtlimiteCreditoKeyReleased
         // TODO add your handling code here:
-         DecimalFormat df = new DecimalFormat("#,###");
+        DecimalFormat df = new DecimalFormat("#,###");
         try {
             String texto = txtlimiteCredito.getText();
             if (texto.length() >= 1) {
@@ -1574,21 +1681,55 @@ public class clienteForm extends javax.swing.JFrame {
         }
         if (b == 0) {
             evt.consume();
-         getToolkit().beep();
+            getToolkit().beep();
         }
 
     }//GEN-LAST:event_txtlimiteCreditoKeyTyped
 
     private void txtnomcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtnomcobradorFocusLost
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_txtnomcobradorFocusLost
 
     private void txtcobradorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtcobradorFocusLost
         // TODO add your handling code here:
-         Cargo_salarioDAO data = new Cargo_salarioDAO();
-        data.listar_cobrador(txtcobrador.getText());
+        listar_cobrador(txtcobrador.getText());
     }//GEN-LAST:event_txtcobradorFocusLost
+
+    private void txtvendedorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtvendedorFocusLost
+        // TODO add your handling code here:
+        listar_vendedor(txtvendedor.getText());
+    }//GEN-LAST:event_txtvendedorFocusLost
+
+    private void txtdptoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtdptoFocusLost
+        // TODO add your handling code here:
+            if (txtdpto.getText().length() > 0)
+            listardpto(txtdpto.getText());
+    }//GEN-LAST:event_txtdptoFocusLost
+
+    private void txtciudadFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtciudadFocusLost
+        // TODO add your handling code here:
+            if (txtciudad.getText().length() > 0)
+            listarciudad(txtciudad.getText());
+    }//GEN-LAST:event_txtciudadFocusLost
+
+    private void txtbarrioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtbarrioFocusLost
+        // TODO add your handling code here:
+            if (txtbarrio.getText().length() > 0)
+            listarbarrio(txtbarrio.getText());
+    }//GEN-LAST:event_txtbarrioFocusLost
+
+    private void txtsucursalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtsucursalFocusLost
+        // TODO add your handling code here:
+            if (txtsucursal.getText().length() > 0)
+            listarsucursal(txtsucursal.getText());
+    }//GEN-LAST:event_txtsucursalFocusLost
+
+    private void txtprofesionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtprofesionFocusLost
+        // TODO add your handling code here:
+         if (txtprofesion.getText().length() > 0)
+            listarprofesion(txtprofesion.getText());
+    }//GEN-LAST:event_txtprofesionFocusLost
 
     /**
      * @param args the command line arguments
@@ -1698,6 +1839,4 @@ public class clienteForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //varibales para enviar datos   
-    
-    
 }

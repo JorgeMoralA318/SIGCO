@@ -2,6 +2,7 @@ package DAO;
 
 import Conexion.Conectar;
 import VO.BarrioVO;
+import Vista.obtenerCodigo;
 import ds.desktop.notify.DesktopNotify;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +29,7 @@ public class BarrioDAO{
             rs = ps.executeQuery();
             while (rs.next()) {
                 id = rs.getString(1);
+                id = obtenerCodigo.codigoDefecto(id, id.length());
             }
         } catch ( SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

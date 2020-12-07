@@ -18,13 +18,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Helena
  */
-public class ciudadVista extends javax.swing.JFrame {
+public class ciudadVista extends javax.swing.JInternalFrame {
 
     tablaCiudad tab = new tablaCiudad();
     ciudadForm form = new ciudadForm();
     barrioForm ba;
     zonaForm z;
     personalForm perCiu;
+    clienteForm cliente;
 
     /**
      * Creates new form departamentoVista
@@ -348,6 +349,9 @@ public class ciudadVista extends javax.swing.JFrame {
                         break;
                         case "con_per":
                             perCiu.txtciudad.setText(codigo);
+                            break;
+                            case "cliente":
+                            cliente.txtciudad.setText(codigo);
                             break;
 
                 }

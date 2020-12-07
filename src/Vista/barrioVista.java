@@ -23,6 +23,8 @@ public class barrioVista extends javax.swing.JFrame {
     tablaBarrio tab = new tablaBarrio();
     barrioForm form = new barrioForm();
     personalForm perBar;
+    clienteForm cliente;
+    mostrarFecha fecha = new mostrarFecha();
 
     /**
      * Creates new form departamentoVista
@@ -30,7 +32,7 @@ public class barrioVista extends javax.swing.JFrame {
     public barrioVista() {
         initComponents();
         mostrar("");
-        mostrarFechaHora();
+       lblfecha.setText(fecha.mostrarFecha());
     }
 
     private void mostrar(String buscar) {
@@ -43,47 +45,15 @@ public class barrioVista extends javax.swing.JFrame {
         txtbuscar.requestFocus();
     }
 
-    private void mostrarFechaHora() {
-        //mostrar fecha del sistema
-        LocalDate date = LocalDate.now();
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int año = date.getYear();
-        Calendar c = Calendar.getInstance();
-        int sem = c.get(Calendar.DAY_OF_WEEK);
-        String español = "";
-        switch (sem) {
-            case 1:
-                español = "domingo";
-                break;
-            case 2:
-                español = "Lunes";
-                break;
-            case 3:
-                español = "Martes";
-                break;
-            case 4:
-                español = "Miercoles";
-                break;
-            case 5:
-                español = "Jueves";
-                break;
-            case 6:
-                español = "Vienes";
-                break;
-            case 7:
-                español = "Sábado";
-                break;
-        }
-
-        lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
-    }
+  
     
     
     
     void cambiarform(){
         form.setResizable(false);
         form.setTitle("Mantenimiento Barrio");
+        String bandera = lblejecucion.getText();
+        form.lblejecucion.setText(bandera);
         form.setLocationRelativeTo(null);
         form.setVisible(true);
         this.dispose();
@@ -119,7 +89,6 @@ public class barrioVista extends javax.swing.JFrame {
         b_nuevo = new javax.swing.JButton();
         b_modificar = new javax.swing.JButton();
         b_salir = new javax.swing.JButton();
-        b_elegir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -132,7 +101,7 @@ public class barrioVista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
+        jPanel1.setBackground(new java.awt.Color(248, 249, 249));
 
         tabla.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -180,7 +149,11 @@ public class barrioVista extends javax.swing.JFrame {
         jToolBar1.add(lblejecucion);
         lblejecucion.getAccessibleContext().setAccessibleName("lblejecucion");
 
+        b_nuevo.setBackground(new java.awt.Color(0, 153, 153));
+        b_nuevo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_nuevo.setForeground(new java.awt.Color(255, 255, 255));
         b_nuevo.setText("Nuevo");
+        b_nuevo.setBorderPainted(false);
         b_nuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,7 +161,11 @@ public class barrioVista extends javax.swing.JFrame {
             }
         });
 
+        b_modificar.setBackground(new java.awt.Color(0, 153, 153));
+        b_modificar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_modificar.setForeground(new java.awt.Color(255, 255, 255));
         b_modificar.setText("Modificar");
+        b_modificar.setBorderPainted(false);
         b_modificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,15 +173,17 @@ public class barrioVista extends javax.swing.JFrame {
             }
         });
 
+        b_salir.setBackground(new java.awt.Color(0, 153, 153));
+        b_salir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_salir.setForeground(new java.awt.Color(255, 255, 255));
         b_salir.setText("Salir");
+        b_salir.setBorderPainted(false);
         b_salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_salirActionPerformed(evt);
             }
         });
-
-        b_elegir.setText("Elegir");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/buscar.png"))); // NOI18N
 
@@ -220,8 +199,6 @@ public class barrioVista extends javax.swing.JFrame {
                         .addComponent(b_nuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_modificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(b_elegir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(b_salir))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -243,10 +220,9 @@ public class barrioVista extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b_salir)
-                    .addComponent(b_elegir)
-                    .addComponent(b_modificar)
-                    .addComponent(b_nuevo))
+                    .addComponent(b_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -332,6 +308,9 @@ public class barrioVista extends javax.swing.JFrame {
                         break;
                     case "con_per":
                        perBar.txtbarrio.setText(codigo);
+                        break;
+                        case "cliente":
+                       cliente.txtbarrio.setText(codigo);
                         break;
                 }
 
@@ -433,7 +412,6 @@ public class barrioVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_elegir;
     private javax.swing.JButton b_modificar;
     private javax.swing.JButton b_nuevo;
     private javax.swing.JButton b_salir;

@@ -11,97 +11,68 @@ import VO.BarrioVO;
 import VO.CiudadVO;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Helena
  */
-public class barrioForm extends javax.swing.JFrame {
-
+public final class barrioForm extends javax.swing.JFrame {
+    
     BarrioVO vo = new BarrioVO();
-   BarrioDAO dao = new BarrioDAO();
+    BarrioDAO dao = new BarrioDAO();
+    mostrarFecha fecha = new mostrarFecha();
+    obtenerCodigo cod= new obtenerCodigo();
 
     /**
      * Creates new form departamentoVista
      */
     public barrioForm() {
         initComponents();
-        mostrarFechaHora();
-        obtener_codigo();
+        lblfecha.setText(fecha.mostrarFecha());
+        obtenerCodigo();
+                
     }
 
-    private void mostrarFechaHora() {
-        //mostrar fecha del sistema
-        LocalDate date = LocalDate.now();
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int año = date.getYear();
-        Calendar c = Calendar.getInstance();
-        int sem = c.get(Calendar.DAY_OF_WEEK);
-        String español = "";
-        switch (sem) {
-            case 1:
-                español = "domingo";
-                break;
-            case 2:
-                español = "Lunes";
-                break;
-            case 3:
-                español = "Martes";
-                break;
-            case 4:
-                español = "Miercoles";
-                break;
-            case 5:
-                español = "Jueves";
-                break;
-            case 6:
-                español = "Vienes";
-                break;
-            case 7:
-                español = "Sábado";
-                break;
-        }
 
-        lblfecha.setText(español + " : * " + dia + "-" + mes + "-" + año + " *");
+    void obtenerCodigo(){
+       txtcodigo.setText(dao.obtener_id());
     }
-
-    //metodo para capturar y enviar datos
+    
     void guardar() {
         String codigo = txtcodigo.getText();
         String barrio = txtbarrio.getText();
         String ciudad = txtciudad.getText();
-
+        
         vo.setCodigo(codigo);
         vo.setBarrio(barrio);
         vo.setCodciudad(ciudad);
-
+        
         dao.Agregar_BarrioVO(vo);
-
+        
     }
-
+    
     void actualizar() {
-       String codigo = txtcodigo.getText();
+        String codigo = txtcodigo.getText();
         String barrio = txtbarrio.getText();
         String ciudad = txtciudad.getText();
-
+        
         vo.setCodigo(codigo);
         vo.setBarrio(barrio);
         vo.setCodciudad(ciudad);
-
+        
         dao.Modificar_BarrioVO(vo);
-
+        
     }
 
     //metodo paara cerra formulario actual y abrir principalç
     void cambiar_form() {
-       barrioVista v = new barrioVista();
+        barrioVista v = new barrioVista();
         v.setResizable(false);
         v.setLocationRelativeTo(null);
+        String bandera = lblejecucion.getText();
+        v.lblejecucion.setText(bandera);
         v.setTitle("Barrio");
         v.setVisible(true);
         this.dispose();
@@ -124,24 +95,20 @@ public class barrioForm extends javax.swing.JFrame {
             txtciudad.requestFocus();
             txtciudad.setBackground(Color.YELLOW);
             return false;
-        } else{
+        } else {
             return true;
         }
     }
-
+    
     void vaciar() {
         txtcodigo.setText("");
         txtbarrio.setText("");
         txtciudad.setText("");
         txtnombreciudad.setText("");
     }
-
-    private void obtener_codigo() {
-        dao = new BarrioDAO();
-        txtcodigo.setText("B-"+dao.obtener_id());
-        txtcodigo.requestFocus();
-    }
-
+    
+   
+    
     public void listarCodigo(String codigo) {
         ArrayList<BarrioVO> list = dao.Listar_BarrioVO(codigo);
         if (list.size() > 0) {
@@ -154,7 +121,7 @@ public class barrioForm extends javax.swing.JFrame {
                 txtbarrio.setText((String) fila[0]);
                 txtciudad.setText((String) fila[1]);
                 lblaction.setText("Update");
-
+                
             }
         } else {
             if (txtcodigo.getText().length() > 0) {
@@ -163,11 +130,11 @@ public class barrioForm extends javax.swing.JFrame {
                 txtciudad.setText("");
                 txtnombreciudad.setText("");
             }
-
+            
         }
-
+        
     }
-
+    
     void eliminar() {
         if (txtcodigo.getText().length() > 0) {
             String codigo = txtcodigo.getText();
@@ -178,18 +145,18 @@ public class barrioForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nada que eliminar");
             txtcodigo.requestFocus();
         }
-
+        
     }
-
+    
     private void subir(KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtciudad.requestFocus();
         }
     }
-
+    
     public void listarciudad(String codigo) {
-       CiudadDAO da = new CiudadDAO();
-       CiudadVO v;
+        CiudadDAO da = new CiudadDAO();
+        CiudadVO v;
         ArrayList<CiudadVO> list = da.Listar_CiudadVO(codigo);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
@@ -199,7 +166,7 @@ public class barrioForm extends javax.swing.JFrame {
                 fila[0] = v.getCiudad();
                 txtnombreciudad.setText((String) fila[0]);
                 b_guardar.requestFocus();
-
+                
             }
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese un codigo existente");
@@ -207,7 +174,7 @@ public class barrioForm extends javax.swing.JFrame {
             txtnombreciudad.setText("");
             txtciudad.requestFocus();
         }
-
+        
     }
 
     /**
@@ -246,7 +213,7 @@ public class barrioForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(236, 233, 216));
+        jPanel1.setBackground(new java.awt.Color(248, 249, 249));
 
         jToolBar1.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.inactiveTitleBackground"));
         jToolBar1.setRollover(true);
@@ -299,7 +266,11 @@ public class barrioForm extends javax.swing.JFrame {
             }
         });
 
+        b_guardar.setBackground(new java.awt.Color(0, 153, 153));
+        b_guardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_guardar.setForeground(new java.awt.Color(255, 255, 255));
         b_guardar.setText("Guardar");
+        b_guardar.setBorderPainted(false);
         b_guardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +286,11 @@ public class barrioForm extends javax.swing.JFrame {
             }
         });
 
+        b_guardarynuevo.setBackground(new java.awt.Color(0, 153, 153));
+        b_guardarynuevo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_guardarynuevo.setForeground(new java.awt.Color(255, 255, 255));
         b_guardarynuevo.setText("Guardar y Nuevo");
+        b_guardarynuevo.setBorderPainted(false);
         b_guardarynuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         b_guardarynuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,7 +306,11 @@ public class barrioForm extends javax.swing.JFrame {
             }
         });
 
+        b_cancelar.setBackground(new java.awt.Color(0, 153, 153));
+        b_cancelar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_cancelar.setForeground(new java.awt.Color(255, 255, 255));
         b_cancelar.setText("Cancelar");
+        b_cancelar.setBorderPainted(false);
         b_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_cancelarActionPerformed(evt);
@@ -343,7 +322,11 @@ public class barrioForm extends javax.swing.JFrame {
             }
         });
 
+        b_eliminar.setBackground(new java.awt.Color(0, 153, 153));
+        b_eliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        b_eliminar.setForeground(new java.awt.Color(255, 255, 255));
         b_eliminar.setText("Eliminar");
+        b_eliminar.setBorderPainted(false);
         b_eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_eliminarActionPerformed(evt);
@@ -379,21 +362,6 @@ public class barrioForm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtnombreciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtbarrio)
-                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(b_guardar)
@@ -404,11 +372,26 @@ public class barrioForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(b_cancelar)
                 .addGap(109, 109, 109))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(102, 102, 102)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtnombreciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtbarrio, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -421,12 +404,12 @@ public class barrioForm extends javax.swing.JFrame {
                     .addComponent(txtciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(txtnombreciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
+                .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b_guardar)
-                    .addComponent(b_guardarynuevo)
-                    .addComponent(b_cancelar)
-                    .addComponent(b_eliminar))
+                    .addComponent(b_guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_guardarynuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -476,11 +459,11 @@ public class barrioForm extends javax.swing.JFrame {
             switch (lblaction.getText()) {
                 case "Add":
                     guardar();
-
+                
                 case "Update":
                     actualizar();
                     break;
-
+                
             }
             cambiar_form();
         }
@@ -493,18 +476,18 @@ public class barrioForm extends javax.swing.JFrame {
                 case "Add":
                     guardar();
                     break;
-
+                
                 case "Update":
                     actualizar();
                     break;
-
+                
             }
             cambiar_form();
         }
-
+        
 
     }//GEN-LAST:event_b_guardarActionPerformed
-
+    
 
     private void b_guardarynuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_guardarynuevoActionPerformed
         // TODO add your handling code here:
@@ -513,16 +496,16 @@ public class barrioForm extends javax.swing.JFrame {
                 case "Add":
                     guardar();
                     break;
-
+                
                 case "Update":
                     if (validar() == true) {
                         actualizar();
                         break;
-
+                        
                     }
             }
             vaciar();
-            obtener_codigo();
+            obtenerCodigo();
         }
     }//GEN-LAST:event_b_guardarynuevoActionPerformed
 
@@ -541,19 +524,18 @@ public class barrioForm extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtbarrio.requestFocus();
-
+            
         } else if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (txtciudad.getText().length() == 0) {
                 ciudadVista dp = new ciudadVista();
                 dp.setResizable(false);
-                dp.setLocationRelativeTo(null);
                 dp.lblejecucion.setText("Barrio");
                 dp.setVisible(true);
-            }else{
-            listarciudad(txtciudad.getText());
+            } else {
+                listarciudad(txtciudad.getText());
             }
         }
-
+        
 
     }//GEN-LAST:event_txtciudadKeyPressed
 
@@ -640,7 +622,7 @@ public class barrioForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_UP) {
             txtcodigo.requestFocus();
-
+            
         }
     }//GEN-LAST:event_txtbarrioKeyPressed
 

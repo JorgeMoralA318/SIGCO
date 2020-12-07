@@ -547,7 +547,6 @@ public class zonaForm extends javax.swing.JFrame {
             if (txtciudad.getText().length() == 0) {
                 ciudadVista dp = new ciudadVista();
                 dp.setResizable(false);
-                dp.setLocationRelativeTo(null);
                 dp.lblejecucion.setText("Zona");
                 dp.setVisible(true);
             }else{
